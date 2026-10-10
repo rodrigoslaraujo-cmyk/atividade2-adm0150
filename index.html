@@ -1,0 +1,3083 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadeia de IAs: eventos sustentáveis em Brasília</title>
+<meta name="description" content="Atividade 2 — ADM0150 Criação de Negócios (UnB, 2026.2). Detecção de oportunidades com cadeia de IAs e auditoria da síntese.">
+<style>
+:root{
+  --bg:#fbfaf7; --surface:#ffffff; --ink:#1d1f1c; --muted:#5b6159; --line:#e3e1da;
+  --accent:#2f6b4f; --accent-soft:#e6f0ea; --warn:#9a5b13; --warn-soft:#fbf0e1;
+  --bad:#a13a32; --bad-soft:#f8e5e3; --ok:#2f6b4f; --ok-soft:#e6f0ea; --gray-soft:#efeee9;
+  --code:#f3f2ed;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#151714; --surface:#1d201c; --ink:#e8e8e3; --muted:#a3a89f; --line:#30342e;
+    --accent:#7cc39c; --accent-soft:#213328; --warn:#e2a95e; --warn-soft:#352a1b;
+    --bad:#ec8b82; --bad-soft:#3a2321; --ok:#7cc39c; --ok-soft:#213328; --gray-soft:#262924;
+    --code:#232621;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#151714; --surface:#1d201c; --ink:#e8e8e3; --muted:#a3a89f; --line:#30342e;
+  --accent:#7cc39c; --accent-soft:#213328; --warn:#e2a95e; --warn-soft:#352a1b;
+  --bad:#ec8b82; --bad-soft:#3a2321; --ok:#7cc39c; --ok-soft:#213328; --gray-soft:#262924;
+  --code:#232621;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Georgia,"Iowan Old Style","Times New Roman",serif}
+.sans,nav,th,.tag,.meta,.kicker,h1,h2,h3,h4,.btn,summary{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header.top{border-bottom:1px solid var(--line);background:var(--surface)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 16px}
+.top .wrap{padding-top:22px;padding-bottom:0}
+.kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.top h1{font-size:26px;line-height:1.25;margin:6px 0 4px}
+.top .meta{font-size:14px;color:var(--muted);margin-bottom:14px}
+nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px}
+nav::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;padding:10px 12px;font-size:14px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
+nav a:hover{color:var(--ink)}
+nav a[aria-current="page"]{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+main{padding:28px 0 64px}
+section.page{display:block}
+.js section.page{display:none}
+.js section.page.active{display:block}
+h2{font-size:24px;margin:0 0 6px;line-height:1.3}
+h3{font-size:18px;margin:32px 0 8px}
+h4{font-size:15px;margin:20px 0 6px}
+p{margin:0 0 14px}
+.lede{font-size:18px;color:var(--muted);max-width:760px}
+a{color:var(--accent)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:16px 0}
+.idgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 24px}
+.idgrid div span{display:block;font-family:system-ui,sans-serif;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.tablewrap{overflow-x:auto;margin:12px 0 18px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--gray-soft);font-weight:600}
+tr:last-child td{border-bottom:0}
+td.n{font-family:system-ui,sans-serif;color:var(--muted);white-space:nowrap}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.t-ok{background:var(--ok-soft);color:var(--ok)}
+.t-warn{background:var(--warn-soft);color:var(--warn)}
+.t-bad{background:var(--bad-soft);color:var(--bad)}
+.t-gray{background:var(--gray-soft);color:var(--muted)}
+.block{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:14px 0;background:var(--surface)}
+.block pre{margin:0;padding:14px 16px;background:var(--code);font:12.5px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word;border-right:1px solid var(--line)}
+.block .why{padding:14px 16px;font-size:15px}
+.block .why .tag{margin-bottom:8px}
+@media (max-width:760px){.block{grid-template-columns:1fr}.block pre{border-right:0;border-bottom:1px solid var(--line)}}
+pre.full{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font:12.5px/1.55 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word;max-height:520px;overflow:auto}
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0}
+.note.warn{border-color:var(--warn);background:var(--warn-soft)}
+.summary-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.stat b{display:block;font:600 28px/1.1 system-ui,sans-serif}
+.stat span{font:13px/1.4 system-ui,sans-serif;color:var(--muted)}
+details{border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:12px 0}
+summary{cursor:pointer;padding:14px 18px;font-weight:600;font-size:15px}
+details[open] summary{border-bottom:1px solid var(--line)}
+.annex{padding:8px 20px 20px;font-size:15px}
+.annex table{font-size:13.5px}
+.annex h1{font-size:20px}.annex h2{font-size:18px}.annex h3{font-size:16px}
+.annex table,.annex th,.annex td{border:1px solid var(--line)}
+.annex pre,.annex code{white-space:pre-wrap;word-break:break-word}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:40px;font-family:system-ui,sans-serif;font-size:14px}
+.pager a{text-decoration:none}
+footer{border-top:1px solid var(--line);padding:18px 0 28px;color:var(--muted);font:13px/1.5 system-ui,sans-serif}
+ol.tight li,ul.tight li{margin-bottom:6px}
+.check td:nth-child(2){white-space:nowrap}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="kicker">ADM0150 · Criação de Negócios · UnB · 2026.2 · Atividade 2</div>
+    <h1>Oportunidades em eventos sustentáveis em Brasília: um estudo com cadeia de IAs</h1>
+    <div class="meta">Rodrigo de Souza Leitão de Araújo · Matrícula 211051415 · Profa. Marina Figueiredo Moreira</div>
+    <nav aria-label="Seções">
+      <a href="#abertura">1. Abertura</a>
+      <a href="#prompt">2. Prompt-mestre</a>
+      <a href="#protocolo">3. Protocolo</a>
+      <a href="#auditoria">4. Síntese auditada</a>
+      <a href="#conclusao">5. Conclusão</a>
+      <a href="#anexos">Anexos</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ 1. ABERTURA ============ -->
+<section class="page" id="abertura">
+  <h2>1. Abertura</h2>
+  <p class="lede">Este estudo usa uma cadeia de quatro inteligências artificiais para detectar oportunidades de negócio em produção de eventos com foco em sustentabilidade ambiental, em Brasília, no horizonte 2026–2030. Em seguida, audita o resultado contra as respostas originais e contra fontes oficiais.</p>
+
+  <div class="card idgrid sans">
+    <div><span>Autor</span>Rodrigo de Souza Leitão de Araújo</div>
+    <div><span>Matrícula</span>211051415</div>
+    <div><span>Disciplina</span>ADM0150 — Criação de Negócios</div>
+    <div><span>Semestre</span>2026.2 · Universidade de Brasília</div>
+  </div>
+
+  <h3>Objetivo do estudo</h3>
+  <p>A primeira tarefa foi construir um prompt que carregasse a régua analítica das Aulas 4, 5 e 6, aplicá-lo sem alteração em três IAs (ChatGPT, Gemini e DeepSeek) e pedir a uma quarta IA (Claude) que sintetizasse as três respostas. O centro do trabalho, porém, é a auditoria dessa síntese. Ela verifica de onde veio cada afirmação, o que foi distorcido ou suprimido no caminho e quais fatos resistem à checagem em fonte primária.</p>
+  <p>Escolhi o setor de eventos sustentáveis porque é a área em que quero trabalhar, especialmente com eventos privados e ativações de marca. Também é um setor em que a geração de resíduos ainda é pouco olhada em Brasília.</p>
+
+  <h3>A régua analítica: instrumentos escolhidos</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Aula</th><th>Instrumento</th><th>Uso</th><th>Por que entrou</th></tr></thead>
+    <tbody>
+      <tr><td class="n">Aula 4</td><td>Tendência × oportunidade</td><td><span class="tag t-ok">Incluído · B3</span></td><td>Sem essa distinção, a IA devolve "sustentabilidade" e "ESG" como se fossem negócios. Exigi cliente nomeável para separar o movimento geral do problema que alguém paga para resolver.</td></tr>
+      <tr><td class="n">Aula 4</td><td>Cinco perguntas de triagem</td><td><span class="tag t-ok">Incluído · B5</span></td><td>Obrigam cada oportunidade a ser respondida, e não só descrita, principalmente "quem paga" e "por que agora", que são os pontos mais fracos de ideias de sustentabilidade.</td></tr>
+      <tr><td class="n">Aula 4</td><td>Leitura crítica de dado de mercado</td><td><span class="tag t-ok">Incluído · B4</span></td><td>Todo número precisa trazer fonte, ano e o que mede. Também criei a marca [SEM DADO CONFIÁVEL] para a IA declarar a lacuna em vez de inventar, o que deixa as respostas auditáveis.</td></tr>
+      <tr><td class="n">Aula 5</td><td>Checklist final de Dornelas</td><td><span class="tag t-ok">Incluído como filtro · B6</span></td><td>É o critério de corte. O que não passa nas cinco perguntas vai para "Descartadas", com o motivo, e assim o filtro aparece funcionando.</td></tr>
+      <tr><td class="n">Aula 5</td><td>Os 3Ms</td><td><span class="tag t-ok">Incluído · B9</span></td><td>Estruturam a saída em demanda, tamanho e estrutura, e margem. Com campos iguais, as três respostas ficam comparáveis.</td></tr>
+      <tr><td class="n">Aula 5</td><td>Critérios de alto e baixo potencial (Timmons)</td><td><span class="tag t-warn">Só a lógica · B7</span></td><td>Uso a lógica (cliente identificado, concorrência não consolidada, barreira de entrada, equipe), mas proíbo os patamares numéricos como filtro. Veja abaixo.</td></tr>
+      <tr><td class="n">Aula 6</td><td>Definição de modelo de negócio</td><td><span class="tag t-ok">Incluído · B9</span></td><td>Obriga a resposta a dizer quem paga, por que paga e a que custo, que é a pergunta que a bolha das pontocom esqueceu.</td></tr>
+      <tr><td class="n">Aula 6</td><td>Os cinco modelos de negócio na web</td><td><span class="tag t-ok">Incluído · B9</span></td><td>Pede o enquadramento ou a justificativa de que não se enquadra. Num setor físico como eventos, a segunda resposta também é informativa.</td></tr>
+      <tr><td class="n">Aula 6</td><td>Métrica de atenção × métrica de negócio</td><td><span class="tag t-ok">Incluído como proibição · B7</span></td><td>Em eventos, a tentação é justificar o potencial com público, alcance e "engajamento". Proibi isso e exigi receita, margem e custo de aquisição.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>O que ficou de fora, e por quê</h3>
+  <div class="card">
+    <p><strong>Patamares numéricos de Timmons: fora do filtro, mas não ignorados.</strong> Para um negócio novo, metas como ponto de equilíbrio em menos de dois anos são referências importantes. Porém, como a própria Aula 5 alerta (slide 12), esses patamares foram calibrados para startups de capital de risco. Aplicados como corte a uma microempresa de serviços com R$ 50 mil, reprovariam negócios saudáveis. Por isso o prompt usa só a lógica dos critérios e deixa os números como referência para uma etapa posterior, de plano de negócios.</p>
+    <p style="margin:0"><strong>Cinco aspectos de Dornelas (mercado, retorno, vantagem, equipe, compromisso): não incluídos.</strong> Eles se sobrepõem a instrumentos que já estão no prompt: os 3Ms cobrem mercado e retorno, e a pergunta "por que você e não o incumbente?" cobre vantagem. Repeti-los alongaria o prompt sem ganho.</p>
+  </div>
+  <div class="pager"><span></span><a href="#prompt">Próximo: Prompt-mestre →</a></div>
+</section>
+
+<!-- ============ 2. PROMPT ============ -->
+<section class="page" id="prompt">
+  <h2>2. O prompt-mestre</h2>
+  <p class="lede">Um único prompt, aplicado sem alteração nas três IAs. Cada bloco na íntegra, ao lado do instrumento de aula que ele carrega e do efeito que eu esperava.</p>
+  <div class="note sans" style="font-size:14px">Decisões visíveis. <b>Recorte:</b> B2. <b>Critério de corte:</b> B6 (checklist de Dornelas) e B7 (proibições). <b>Padrão de evidência:</b> B4. <b>Formato:</b> B9. <b>Quantidade:</b> B8.</div>
+  <div class="block"><pre>[B1 — PAPEL E OBJETIVO]
+Você é um analista de oportunidades de negócio. Sua tarefa é DETECTAR e QUALIFICAR
+oportunidades de negócio no mercado brasileiro de PRODUÇÃO DE EVENTOS COM FOCO EM
+SUSTENTABILIDADE AMBIENTAL, em Brasília (DF), para o horizonte 2026–2030.
+Não quero uma lista de ideias ou tendências: quero oportunidades que sobrevivam
+aos filtros abaixo. Prefiro poucas oportunidades bem sustentadas a muitas genéricas.</pre><div class="why"><span class="tag t-ok">Aula 5 · ideia não é oportunidade</span><p>Avisa desde o início que não quero lista de ideias, mas oportunidades filtradas. Pedir &quot;poucas e bem sustentadas&quot; reduz respostas genéricas.</p></div></div>
+<div class="block"><pre>[B2 — RECORTE]
+- Setor: eventos (corporativos, institucionais, governamentais, culturais e sociais), com a
+  sustentabilidade ambiental como parte da solução — gestão de resíduos, energia, materiais,
+  fornecedores, mensuração de impacto, associação estratégica com a marca do contratante.
+  Vale qualquer elo da cadeia: agência/produtora, serviço especializado a produtores,
+  fornecimento de insumos, consultoria, mensuração e certificação.
+- Região: Brasília (DF) e Entorno, no Centro-Oeste.
+- Porte: micro ou pequena empresa, até 5 pessoas no início.
+- Capital inicial disponível: até R$ 50.000, sem investidor externo.
+- Empreendedor: estudante de Administração com experiência profissional em marketing.
+- Horizonte: abertura em 2026–2027, consolidação até 2030.</pre><div class="why"><span class="tag t-ok">Recorte · Aula 4 (o Estado e o mercado de Brasília)</span><p>Delimita setor, região, porte, capital e perfil. O capital de R$ 50 mil obriga a descartar ideias caras. Deixei aberto qual elo da cadeia, para a IA testar as hipóteses em vez de confirmar a minha.</p></div></div>
+<div class="block"><pre>[B3 — TENDÊNCIA x OPORTUNIDADE]
+Para cada item, separe explicitamente:
+(a) TENDÊNCIA: a direção geral em que o mercado está indo (não tem dono, preço nem cliente);
+(b) OPORTUNIDADE: um problema concreto, de um cliente identificável, que ele quer resolver
+a ponto de pagar, e que o empreendedor do recorte consegue resolver melhor do que quem já tenta.
+Se você só conseguir descrever a tendência, NÃO liste o item como oportunidade.</pre><div class="why"><span class="tag t-ok">Aula 4 · tendência × oportunidade</span><p>Impede que &quot;ESG&quot; ou &quot;sustentabilidade&quot; sejam vendidos como oportunidade. Sem cliente nomeável, o item é descartado.</p></div></div>
+<div class="block"><pre>[B4 — PADRÃO DE EVIDÊNCIA E LEITURA CRÍTICA DE DADOS]
+- Todo número deve vir com: fonte, ano e definição do que está sendo medido
+  (ex.: valor nominal ou real? Brasil ou DF? investimento anunciado ou realizado?).
+- Fontes aceitas: IBGE, SEBRAE, Banco Central, ministérios (ex.: Turismo, Meio Ambiente),
+  governo do DF, agências reguladoras, associações setoriais de eventos, legislação e normas
+  técnicas. Não use blogs, nem &quot;estimativas de mercado&quot; sem autor.
+- Não trate anúncio, intenção ou projeção como fato consumado.
+- Se não houver dado confiável, escreva literalmente &quot;[SEM DADO CONFIÁVEL]&quot;.
+  NÃO estime, NÃO arredonde, NÃO invente fontes. Lacuna declarada é preferível a número inventado.
+- Marque cada afirmação como [FATO] (com fonte) ou [INFERÊNCIA].
+- Informe se você consultou a web para responder, e sua data de corte de conhecimento.</pre><div class="why"><span class="tag t-ok">Aula 4 · leitura crítica de dado</span><p>Fonte, ano e o que o número mede. As marcas [FATO], [INFERÊNCIA] e [SEM DADO CONFIÁVEL] tornam as respostas auditáveis e preferem a lacuna declarada ao número inventado.</p></div></div>
+<div class="block"><pre>[B5 — TRIAGEM: AS CINCO PERGUNTAS]
+Responda, para cada oportunidade, às cinco perguntas — respondidas, não apenas descritas:
+1. Quem exatamente tem esse problema? (cliente nomeável; &quot;as empresas&quot; ou &quot;o governo&quot; não vale)
+2. Quanto dói? (custo em dinheiro, tempo ou risco para o cliente)
+3. Quem paga, e com que dinheiro? (quem usa pode não ser quem paga; identifique o orçamento)
+4. Por que este empreendedor, e não o incumbente? (se um concorrente estabelecido copia em 3 meses, não serve)
+5. Por que agora, e não em 2020 ou 2035? (qual mudança recente abriu a janela)</pre><div class="why"><span class="tag t-ok">Aula 4 · cinco perguntas de triagem</span><p>Cada oportunidade precisa ser respondida, não só descrita, principalmente &quot;quem paga&quot; e &quot;por que agora&quot;.</p></div></div>
+<div class="block"><pre>[B6 — FILTRO DE CORTE: CHECKLIST FINAL DE DORNELAS]
+Antes de incluir qualquer oportunidade, submeta-a às cinco perguntas de corte:
+1. Existe um problema a ser resolvido?
+2. Existe um produto ou serviço que solucionará esse problema?
+3. É possível identificar com clareza os potenciais clientes?
+4. Será possível implantar uma estratégia de marketing e vendas exequível, em custo e retorno?
+5. A janela da oportunidade está aberta?
+Se qualquer resposta for &quot;não&quot; ou &quot;não sei&quot;, a oportunidade NÃO entra na lista principal:
+vai para a seção &quot;Descartadas&quot;, com a pergunta em que foi reprovada.</pre><div class="why"><span class="tag t-ok">Aula 5 · checklist final de Dornelas</span><p>É o critério de corte. O que não passa vai para &quot;Descartadas&quot;, com o motivo, e assim o filtro aparece funcionando.</p></div></div>
+<div class="block"><pre>[B7 — O QUE PROIBIR]
+- É proibido justificar potencial com métricas de atenção: audiência, seguidores, downloads,
+  pageviews, visualizações, &quot;engajamento&quot; ou número de participantes de eventos como prova
+  de receita. Use apenas métricas de negócio: receita, custo, margem, ticket, recorrência,
+  custo de aquisição, ponto de equilíbrio.
+- Não aplique os patamares numéricos de capital de risco (ex.: crescer 30–50% ao ano) para
+  julgar um pequeno negócio; use apenas os critérios de lógica (cliente identificado,
+  concorrência não consolidada, barreira de entrada, equipe adequada).</pre><div class="why"><span class="tag t-ok">Aula 6 · atenção × negócio; Aula 5 · patamares de Timmons</span><p>Proíbe justificar com público, alcance ou &quot;engajamento&quot; e impede que os patamares de startup reprovem um pequeno negócio saudável.</p></div></div>
+<div class="block"><pre>[B8 — QUANTIDADE]
+Exatamente 3 oportunidades aprovadas, ordenadas da mais à menos defensável,
+e de 2 a 4 oportunidades descartadas.</pre><div class="why"><span class="tag t-ok">Etapa 2 · quantidade</span><p>Exatamente 3 aprovadas força a seleção. Pedir as descartadas deixa visível o que o filtro cortou.</p></div></div>
+<div class="block"><pre>[B9 — FORMATO DE SAÍDA FIXO — use estes campos, nesta ordem, para cada oportunidade]
+1. Nome da oportunidade
+2. Tendência de origem [com fonte]
+3. Oportunidade: problema específico + cliente nomeável
+4. Cinco perguntas de triagem (B5), uma resposta por pergunta
+5. 3Ms
+   5.1 Demanda de mercado: audiência-alvo; durabilidade; acesso aos clientes pelos canais;
+       custo de captação se recupera em menos de 1 ano?
+   5.2 Tamanho e estrutura: cresce, é emergente ou fragmentado?; barreiras de entrada e
+       custos de saída; nº de competidores-chave; estágio do ciclo de vida
+   5.3 Análise de margem: forças do negócio; margem bruta possível; ponto de equilíbrio e
+       retorno; cadeia de valor até o cliente final
+6. Modelo de negócio: como gera receita e quais custos e investimentos exige —
+   QUEM PAGA, POR QUE PAGA e A QUE CUSTO
+7. Enquadramento nos cinco modelos de negócio na web (intermediação de negócios,
+   comercialização de propaganda, mercado virtual, empresarial, redes sociais) —
+   ou justificativa de por que não se enquadra em nenhum
+8. Checklist final de Dornelas (B6): sim/não + uma linha de justificativa por pergunta
+9. Principal risco e o que invalidaria a oportunidade
+10. Tabela de evidências: afirmação | número | fonte | ano | o que o número mede
+
+Seção final &quot;DESCARTADAS&quot;: nome | filtro em que foi reprovada | motivo em uma linha.
+Responda em português do Brasil.</pre><div class="why"><span class="tag t-ok">Aula 5 · 3Ms; Aula 6 · modelo de negócio e 5 modelos web</span><p>Campos fixos tornam as três respostas comparáveis e obrigam a responder quem paga, por que e a que custo.</p></div></div>
+  <h3>Como cada IA respondeu à régua</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Bloco</th><th>ChatGPT (A)</th><th>Gemini (B)</th><th>DeepSeek (C)</th></tr></thead>
+    <tbody>
+      <tr><td>B4 · evidência</td><td><span class="tag t-ok">Seguiu</span> marcou [FATO]/[INFERÊNCIA] e usou [SEM DADO CONFIÁVEL] amplamente</td><td><span class="tag t-bad">Violou</span> estimou CAC, ticket, margem e retorno sem fonte</td><td><span class="tag t-bad">Ignorou</span> sem marcações e com números sem fonte</td></tr>
+      <tr><td>B6 · filtro de corte</td><td><span class="tag t-ok">Seguiu</span> com "Sim, com condição"</td><td><span class="tag t-warn">Formal</span> "SIM" em tudo</td><td><span class="tag t-bad">Ignorou</span></td></tr>
+      <tr><td>B8 · descartadas</td><td><span class="tag t-ok">4 descartadas</span></td><td><span class="tag t-ok">4 descartadas</span></td><td><span class="tag t-bad">Nenhuma</span></td></tr>
+      <tr><td>B9 · formato fixo</td><td><span class="tag t-ok">Seguiu</span></td><td><span class="tag t-ok">Seguiu</span></td><td><span class="tag t-bad">Formato próprio</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="pager"><a href="#abertura">← Abertura</a><a href="#protocolo">Próximo: Protocolo →</a></div>
+</section>
+
+<!-- ============ 3. PROTOCOLO ============ -->
+<section class="page" id="protocolo">
+  <h2>3. Protocolo de teste</h2>
+  <p class="lede">O mesmo prompt nas três IAs, cada uma em conversa nova, sem refinamento. Registrei a primeira resposta de cada uma. A quarta IA, diferente das três, recebeu apenas o prompt de síntese.</p>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Papel</th><th>Ferramenta</th><th>Modelo</th><th>Data e horário</th><th>Busca na web</th></tr></thead>
+    <tbody>
+      <tr><td>IA-A · geradora</td><td>ChatGPT</td><td>"GPT-6" (autodeclarado)</td><td>10/10/2026, resposta salva até 19h02</td><td>Sim (declarado na resposta)</td></tr>
+      <tr><td>IA-B · geradora</td><td>Gemini</td><td>Versão não informada</td><td>10/10/2026, resposta salva até 19h03</td><td>Não (declarado na resposta)</td></tr>
+      <tr><td>IA-C · geradora</td><td>DeepSeek</td><td>Versão não informada</td><td>10/10/2026, resposta salva até 19h04</td><td>Não declarado. Há indícios de busca: marcas de citação removidas e casos de 2025–2026</td></tr>
+      <tr><td>IA-D · sintetizadora</td><td>Claude</td><td>"Opus 5.5" (autodeclarado)</td><td>10/10/2026, prompt enviado às 19h09, resposta salva até 19h12</td><td>Sem botão de controle na interface; restrição feita por instrução (regra 1). Declarou não ter usado a web.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn">
+    <p><strong>Ressalva sobre os metadados.</strong> Modelo e horário foram perguntados às próprias ferramentas <em>depois</em> da primeira resposta. Essas perguntas não alteraram as respostas analisadas. As autodeclarações se mostraram pouco confiáveis: o Gemini informou ter respondido "às 19:34", mas a resposta original já estava salva às 19h03, ou seja, ele informou o horário da pergunta nova. Por isso os horários da tabela vêm do registro de quando cada resposta foi salva, e os modelos aparecem como "autodeclarados". <strong>IA não é fonte nem sobre si mesma.</strong></p>
+    <p style="margin:0">Algumas respostas contêm resíduos da interface na cópia, como "DFLegis +1", legendas de imagens e marcas de citação apagadas. Foram mantidos sem edição nos anexos.</p>
+  </div>
+
+  <h3>O prompt de síntese (IA-D)</h3>
+  <p>As três respostas foram coladas na íntegra e rotuladas apenas como IA-A, IA-B e IA-C. Retirei os nomes das ferramentas para que a síntese não fosse influenciada pela reputação de cada uma.</p>
+  <pre class="full">Você receberá três respostas (IA-A, IA-B e IA-C), produzidas por três ferramentas de IA diferentes a partir do MESMO prompt, sobre oportunidades de negócio em produção de eventos com foco em sustentabilidade ambiental em Brasília (DF), horizonte 2026–2030.
+
+Sua tarefa é EXCLUSIVAMENTE sintetizá-las em um único panorama. Você não é analista nesta tarefa: é um sintetizador.
+
+REGRAS
+1. NÃO acrescente nenhuma informação, número, fonte, lei, empresa ou oportunidade que não esteja nas três respostas. Não use conhecimento próprio nem busca na web. Se algo parecer faltar, aponte a lacuna; não a preencha.
+2. Toda afirmação da síntese deve terminar com a atribuição de origem: [A], [B], [C] ou combinações (ex.: [A,C]).
+3. Preserve números, fontes e grau de certeza exatamente como no original. &quot;Pode crescer&quot; não vira &quot;vai crescer&quot;; &quot;estimado&quot; não vira &quot;comprovado&quot;; uma [INFERÊNCIA] não vira fato; um projeto de lei não vira lei.
+4. Não resolva divergências: quando as respostas discordarem, apresente cada posição lado a lado, com sua origem, sem escolher a vencedora.
+5. Registre diferenças de método: se uma resposta declarou ter usado ou não a web, se seguiu ou não o formato pedido, se marcou ou não [FATO]/[INFERÊNCIA], se usou [SEM DADO CONFIÁVEL].
+
+ESTRUTURA DA SÍNTESE
+(a) Convergências — oportunidades e afirmações presentes em 2 ou 3 respostas.
+(b) Divergências — onde as respostas discordam (na escolha, na ordem de prioridade, nos números, no grau de certeza), mostrando cada posição.
+(c) Itens exclusivos — oportunidades e afirmações que aparecem em apenas uma resposta.
+(d) Conflitos de dados — o mesmo indicador com números, fontes ou status legal diferentes.
+(e) Lacunas — campos marcados [SEM DADO CONFIÁVEL] ou não preenchidos, e por qual resposta.
+(f) Oportunidades descartadas — o que cada resposta descartou e por quê.
+(g) Tabela final: oportunidade | citada por | pontos fortes segundo as respostas | pontos fracos segundo as respostas.
+
+As três respostas seguem abaixo, na íntegra.
+
+=================== IA-A ===================
+[resposta da IA-A colada na íntegra]
+=================== IA-B ===================
+[resposta da IA-B colada na íntegra]
+=================== IA-C ===================
+[resposta da IA-C colada na íntegra]
+=================== FIM DAS RESPOSTAS ===================</pre>
+
+  <h3>Por que cada exigência</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Exigência</th><th>Decisão e efeito esperado</th></tr></thead>
+    <tbody>
+      <tr><td>Regra 1 · não acrescentar nada; sem web</td><td>Isolar a camada de síntese. Qualquer conteúdo novo passa a ser detectável como afirmação órfã.</td></tr>
+      <tr><td>Regra 2 · atribuição [A]/[B]/[C] em toda afirmação</td><td>Tornar a auditoria de rastreabilidade possível: cada frase precisa apontar a origem.</td></tr>
+      <tr><td>Regra 3 · preservar números e grau de certeza</td><td>Evitar a distorção mais comum em resumos: "pode" vira "vai", estimativa vira fato, projeto de lei vira lei.</td></tr>
+      <tr><td>Regra 4 · não resolver divergências</td><td>Síntese tende ao consenso, e as divergências são as primeiras vítimas. Exigi as posições lado a lado.</td></tr>
+      <tr><td>Regra 5 · registrar diferenças de método</td><td>Uso da web, formato e marcações explicam boa parte das divergências entre as IAs.</td></tr>
+      <tr><td>Estrutura (a)–(g)</td><td>Seções fixas para convergências, divergências, exclusivos, conflitos de dados, lacunas e descartadas, de modo que nada "desapareça" sem deixar rastro.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="pager"><a href="#prompt">← Prompt-mestre</a><a href="#auditoria">Próximo: Síntese auditada →</a></div>
+</section>
+
+<!-- ============ 4. AUDITORIA ============ -->
+<section class="page" id="auditoria">
+  <h2>4. A síntese auditada</h2>
+  <p class="lede">Tratei a síntese da IA-D como objeto de investigação, não como conclusão. Ela foi, em geral, fiel, e justamente por isso os erros que passaram são os mais instrutivos.</p>
+
+  <div class="summary-row">
+    <div class="stat"><b>11</b><span>afirmações da síntese rastreadas</span></div>
+    <div class="stat"><b>7</b><span>sustentadas (1 com ressalva)</span></div>
+    <div class="stat"><b>4</b><span>distorcidas</span></div>
+    <div class="stat"><b>0</b><span>órfãs puras</span></div>
+    <div class="stat"><b>5</b><span>supressões identificadas</span></div>
+    <div class="stat"><b>6</b><span>afirmações checadas em fonte primária</span></div>
+  </div>
+
+  <h3>4.1 Auditoria de rastreabilidade</h3>
+  <p><strong>Método.</strong> Para cada afirmação, procurei cada número, lei, empresa e local citado nas três respostas originais. Depois fiz o caminho inverso, partindo das afirmações relevantes das originais para ver se sumiram na síntese.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>#</th><th>Afirmação da síntese</th><th>Em quais IAs aparece</th><th>Fidelidade</th><th>Comentário</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td>"Gestão de resíduos em eventos aparece nas três respostas."</td><td>A (Op. 1), B (Op. 2), C (Op. 1 e 2)</td><td><span class="tag t-ok">Sustentada</span></td><td>É a única convergência real entre as três IAs, e por isso pesa na minha escolha final.</td></tr>
+      <tr><td class="n">2</td><td>IA-B usa [SEM DADO CONFIÁVEL] só três vezes, e CAC, ticket, margem e retorno aparecem sem marcação.</td><td>B</td><td><span class="tag t-ok">Sustentada</span></td><td>A síntese foi fiel e até crítica: mostrou que o Gemini preencheu o formato sem cumprir o padrão de evidência. Uma síntese bem instruída consegue expor falhas de método.</td></tr>
+      <tr><td class="n">3</td><td>Lei de Goiás nº 23.657/2025: PGRS para eventos com 2.000+ pessoas e cooperativas obrigatórias em eventos públicos.</td><td>C</td><td><span class="tag t-ok">Sustentada</span></td><td>Fiel à origem e confirmada em fonte primária (V4).</td></tr>
+      <tr><td class="n">4</td><td>PL 5098/2025, apensado ao PL 5824/2023, com vigência 180 dias após aprovação.</td><td>C</td><td><span class="tag t-ok">Sustentada</span></td><td>Ponto positivo: a síntese manteve o status de projeto de lei e não o transformou em lei. A regra 3 funcionou.</td></tr>
+      <tr><td class="n">5</td><td>"2.450 empresas de eventos ativas no DF, das quais 478 de serviços de eventos."</td><td>C</td><td><span class="tag t-warn">Distorcida</span></td><td>O original diz "2.450 empresas… <em>com faturamento até R$ 300 milhões</em>". A síntese cortou justamente o trecho que define o que está sendo medido. É o problema do denominador da Aula 4: o número continua igual, mas deixa de dizer do que fala.</td></tr>
+      <tr><td class="n">6</td><td>Sobre a gestão de resíduos de B: "ticket recuperável em um evento".</td><td>B</td><td><span class="tag t-warn">Distorcida</span></td><td>O Gemini disse que o <em>custo de captação</em> (CAC ≈ R$ 800) se recupera em um evento. A síntese trocou CAC por ticket, e são coisas diferentes. Pequena na forma, mas muda o sentido de um argumento de margem.</td></tr>
+      <tr><td class="n">7</td><td>Convergência: "reutilização de materiais como eixo de negócio" [A,B,C].</td><td>A, B, C (elementos)</td><td><span class="tag t-warn">Distorcida (grau)</span></td><td>Os elementos existem nas três, mas o agrupamento foi construído pela síntese. Ela juntou uma assessoria sem estoque (A), um acervo próprio com os R$ 50 mil (B) e locação com lavagem (C), que são modelos opostos em capital, e chamou isso de consenso. A divergência só aparece em outra seção.</td></tr>
+      <tr><td class="n">8</td><td>Contra a consultoria para licitações de B: "A observa que a Lei 14.133 é princípio e não garante exigência em edital".</td><td>A (em contexto geral)</td><td><span class="tag t-warn">Distorcida (contexto)</span></td><td>A frase existe no ChatGPT, mas não como crítica à oportunidade do Gemini. A relação foi criada pela síntese. É análise nova disfarçada de atribuição, no limite de uma afirmação órfã.</td></tr>
+      <tr><td class="n">9</td><td>Contra a infraestrutura física de C: "A, em geral, recomenda não imobilizar capital antes de validar".</td><td>A (plano de validação próprio)</td><td><span class="tag t-gray">Sustentada, com ressalva</span></td><td>Mesmo padrão da linha 8, mas a síntese admite o "em geral", o que deixa claro que está transpondo. Ainda assim, usa uma resposta para julgar outra, o que a regra 1 não pedia.</td></tr>
+      <tr><td class="n">10</td><td>"Decreto Distrital nº 43.190/2022" listado entre as fontes exclusivas de B.</td><td>B</td><td><span class="tag t-ok">Sustentada</span></td><td>Fiel à origem, mas a origem está errada (V3): o decreto trata de outro assunto. A síntese reproduziu fielmente um erro, o que mostra que fidelidade não é verdade e que a auditoria precisa das duas camadas.</td></tr>
+      <tr><td class="n">11</td><td>"Nenhuma das três traz tamanho monetário do mercado no DF com fonte."</td><td>A, B, C (conclusão derivada)</td><td><span class="tag t-ok">Sustentada</span></td><td>É conclusão da própria síntese, mas estava prevista na seção de lacunas do prompt. Considero aceitável.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>Afirmações suprimidas</h4>
+  <div class="tablewrap"><table>
+    <thead><tr><th>#</th><th>Estava na origem e desapareceu</th><th>Origem</th><th>Relevância</th><th>Comentário</th></tr></thead>
+    <tbody>
+      <tr><td class="n">S1</td><td>"…com faturamento até R$ 300 milhões" (qualificador das 2.450 empresas)</td><td>C</td><td><span class="tag t-bad">Alta</span></td><td>Ver linha 5.</td></tr>
+      <tr><td class="n">S2</td><td>As três oportunidades são "hipóteses comerciais qualificadas para validação, não negócios cuja rentabilidade já esteja comprovada".</td><td>A</td><td><span class="tag t-bad">Alta</span></td><td>Na tabela final da síntese, as margens de 70–80% e o retorno em 6–8 meses do Gemini aparecem como "pontos fortes", lado a lado, sem essa ressalva central do ChatGPT. O leitor apressado sai achando que há números.</td></tr>
+      <tr><td class="n">S3</td><td>"Consultorias ambientais tradicionais cobram preços proibitivos"</td><td>B</td><td><span class="tag t-warn">Média</span></td><td>Era o argumento do Gemini para a pergunta "por que você e não o incumbente?". Sumiu.</td></tr>
+      <tr><td class="n">S4</td><td>"Brasília concentra órgãos ambientais federais"</td><td>C</td><td><span class="tag t-gray">Baixa</span></td><td>Argumento de localização do DeepSeek, omitido.</td></tr>
+      <tr><td class="n">S5</td><td>"Durabilidade: altíssima"</td><td>B</td><td><span class="tag t-gray">Baixa</span></td><td>Omitido sem prejuízo relevante.</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Órfãs.</strong> Não encontrei afirmação órfã pura: tudo o que a síntese diz tem alguma origem. Atribuo isso às regras 1 e 2 do prompt de síntese. O que apareceu foi uma forma mais sutil: <em>relações</em> órfãs (linhas 8 e 9), em que a frase é real mas a ligação foi inventada. São mais difíceis de detectar do que um dado inventado, porque passam pela checagem de origem.</p>
+
+  <h3>4.2 Verificação em fonte primária</h3>
+  <p>Fontes acessadas em 10/10/2026.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>#</th><th>Afirmação</th><th>Resultado</th><th>O que a fonte diz</th><th>Referência</th></tr></thead>
+    <tbody>
+      <tr><td class="n">V1</td><td>A lei distrital limita a multa diária a R$ 2.000 e a multa simples a R$ 20.000, e impõe obrigações a eventos em espaços públicos (A).</td><td><span class="tag t-ok">Confirmada</span></td><td>Art. 9º, II e III, e art. 11, I a VI: limpeza, gerenciamento, segregação, triagem e compostagem para promotores de eventos em vias, logradouros ou espaços públicos. O ChatGPT não citou o § 3º do art. 9º, que dobra as multas na reincidência.</td><td>DISTRITO FEDERAL. Lei nº 5.610, de 16 de fevereiro de 2016, alterada pela Lei nº 6.484/2020. <a href="https://planaltina.df.gov.br/documents/d/planaltina/lei-no-5-610-de-16-de-fevereiro-de-2016">Texto da lei</a>.</td></tr>
+      <tr><td class="n">V2</td><td>A Lei 14.133 inclui o desenvolvimento nacional sustentável entre os princípios das contratações (A e B). B acrescenta "inclusão obrigatória e crescente de critérios".</td><td><span class="tag t-ok">Confirmada</span> <span class="tag t-warn">B exagera</span></td><td>O art. 5º lista o princípio, mas um princípio não é exigência de edital. A leitura do ChatGPT ("não garante") é a correta, e a do Gemini aumenta o grau de certeza.</td><td>BRASIL. Lei nº 14.133, de 1º de abril de 2021, art. 5º. <a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/l14133.htm">Planalto</a>.</td></tr>
+      <tr><td class="n">V3</td><td>"Decreto Distrital nº 43.190/2022" estabelece critérios de sustentabilidade nas licitações do DF (B).</td><td><span class="tag t-bad">Não confirmada</span></td><td>O decreto existe, mas <strong>aprova o Regimento Interno da Fundação de Apoio à Pesquisa do DF (FAP/DF)</strong> e não trata de critérios ambientais em licitações. O número é real e o conteúdo, inventado. Esse erro sustentava a oportunidade nº 1 do Gemini, e a síntese o repetiu sem alerta.</td><td>DISTRITO FEDERAL. Decreto nº 43.190, de 5 de abril de 2022. <a href="https://www.sinj.df.gov.br/sinj/Norma/202a9ed63bd544aba1c28066f763b648/Decreto_43190_05_04_2022.html">SINJ-DF</a>.</td></tr>
+      <tr><td class="n">V4</td><td>A Lei GO 23.657/2025 exige PGRS para eventos com 2.000+ pessoas e cooperativas obrigatórias em eventos públicos (C).</td><td><span class="tag t-ok">Confirmada</span></td><td>Lei de 9/9/2025: abrange eventos com público estimado de 2.000 pessoas ou mais, e o PGRS aprovado é requisito para autorizar o evento. A contratação de cooperativas ou associações de catadores é obrigatória em eventos públicos e público-privados e recomendada nos privados. O projeto aprovado em julho de 2025 previa 200 pessoas.</td><td>ASSEMBLEIA LEGISLATIVA DO ESTADO DE GOIÁS. <a href="https://portal.al.go.leg.br/noticias/158587">Sanção da Lei 23.657/2025</a>; <a href="https://portal.al.go.leg.br/noticias/156381">aprovação do PL 14614/25</a>.</td></tr>
+      <tr><td class="n">V5</td><td>O PL 5098/2025 altera a PNRS para tratar de resíduos de eventos (C).</td><td><span class="tag t-ok">Confirmada</span></td><td>O projeto existe, é de autoria da Dep. Flávia Morais e tem a ementa: "Altera a Lei nº 12.305, de 2 de agosto de 2010, para dispor sobre o gerenciamento de resíduos gerados em eventos." Continua sendo projeto, não lei. Não verifiquei a apensação ao PL 5824/2023.</td><td>BRASIL. Câmara dos Deputados. PL 5098/2025. <a href="https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=3019863&amp;filename=Tramitacao-1-PL%205098/2025">Inteiro teor</a>.</td></tr>
+      <tr><td class="n">V6</td><td>Há 2.450 empresas de eventos ativas no DF, das quais 478 de serviços de eventos (C).</td><td><span class="tag t-gray">Não foi possível verificar</span></td><td>O DeepSeek não nomeia a fonte. O qualificador "faturamento até R$ 300 milhões" sugere uma base comercial de cadastro de empresas, não uma estatística oficial. O caminho de checagem seria o Mapa de Empresas (gov.br) ou o DataSebrae, filtrando o CNAE 8230-0/01 no DF.</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><strong>Leitura do resultado.</strong> O DeepSeek, que ignorou o formato, trouxe três fatos verificáveis e corretos (V4, V5 e a origem de V6). O Gemini, que seguiu o formato à risca, trouxe a única citação legal falsa. Obedecer ao formato não garante obedecer à evidência.</div>
+
+  <h3>4.3 Aplicação da régua</h3>
+  <p>Submeti por minha conta as três oportunidades mais promissoras do conjunto ao checklist final de Dornelas (Aula 5) e à pergunta de modelo de negócio (Aula 6).</p>
+
+  <h4>A. Gestão operacional de resíduos em eventos (A, B e C)</h4>
+  <div class="tablewrap"><table class="check">
+    <thead><tr><th>Pergunta de corte</th><th>Resposta</th><th>Justificativa</th></tr></thead>
+    <tbody>
+      <tr><td>Existe um problema a ser resolvido?</td><td><span class="tag t-ok">Sim</span></td><td>Para eventos em espaços públicos, há obrigação legal com multa (V1). Para eventos privados, a pressão vem do contratante e dos patrocinadores: é exigência de mercado, não de lei.</td></tr>
+      <tr><td>Existe produto ou serviço que o solucione?</td><td><span class="tag t-ok">Sim</span></td><td>Planejamento, triagem no local com cooperativas, destinação correta e dossiê de comprovação.</td></tr>
+      <tr><td>Clientes identificáveis?</td><td><span class="tag t-ok">Sim</span></td><td>Empresas privadas que contratam stands, experiências de marca e ações publicitárias, e as produtoras que executam esses eventos em Brasília.</td></tr>
+      <tr><td>Marketing e vendas exequíveis em custo e retorno?</td><td><span class="tag t-warn">Sim, com condição</span></td><td>Venda consultiva B2B, na qual a minha experiência em marketing ajuda. O custo de aquisição ainda não foi medido.</td></tr>
+      <tr><td>A janela está aberta?</td><td><span class="tag t-ok">Sim</span></td><td>Goiás já legislou (V4) e há projeto federal em tramitação (V5): a regra está endurecendo na região. A oportunidade não depende da aprovação, mas ganha força com ela.</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Quem paga, por quê, a que custo.</strong> Paga a empresa privada que contrata o evento, com a verba de marketing e eventos, ou a produtora que o executa. Ela paga pela conformidade, mas sobretudo pela reputação: descarte correto, valorização dos trabalhadores e cooperativas e uma comprovação que ela pode usar na marca. Por isso o preço é mais alto do que o de uma limpeza comum. <strong>Não há valor de mercado confiável:</strong> o preço sai por proposta, conforme o porte (um stand pequeno, um stand grande, uma experiência de marca). Pela minha vivência na área, confirmo que essa variação é grande demais para um preço médio, e por isso concordo com o ChatGPT e rejeito as diárias estimadas pelo Gemini. Os custos principais são equipe de triagem, remuneração das cooperativas, transporte e destinação, sinalização e coletores, e o tempo de produção do relatório.</p>
+
+  <h4>B. Relatórios de impacto ambiental (A; elementos em B e C)</h4>
+  <div class="tablewrap"><table class="check">
+    <thead><tr><th>Pergunta de corte</th><th>Resposta</th><th>Justificativa</th></tr></thead>
+    <tbody>
+      <tr><td>Existe um problema?</td><td><span class="tag t-ok">Sim</span></td><td>Contratantes e patrocinadores precisam comprovar o que fizeram de ambiental no evento.</td></tr>
+      <tr><td>Existe produto ou serviço?</td><td><span class="tag t-ok">Sim</span></td><td>Pesagem, registro de destinação e um relatório com indicadores e evidências.</td></tr>
+      <tr><td>Clientes identificáveis?</td><td><span class="tag t-ok">Sim</span></td><td>Gerentes de marketing e sustentabilidade das empresas contratantes e agências.</td></tr>
+      <tr><td>Marketing e vendas exequíveis?</td><td><span class="tag t-warn">Com condição</span></td><td>Vendido sozinho, o cliente pode achar que a agência já faz sem custo extra.</td></tr>
+      <tr><td>A janela está aberta?</td><td><span class="tag t-warn">Com condição</span></td><td>Não há evidência de aumento recente da exigência em Brasília.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Sozinha, essa oportunidade é frágil. <strong>Integrada à gestão de resíduos, ela se fortalece:</strong> os dados nascem da operação, e o relatório transforma limpeza em ativo de marca.</p>
+
+  <h4>C. Consultoria de conformidade ambiental para licitações (B)</h4>
+  <div class="tablewrap"><table class="check">
+    <thead><tr><th>Pergunta de corte</th><th>Resposta</th><th>Justificativa</th></tr></thead>
+    <tbody>
+      <tr><td>Existe um problema?</td><td><span class="tag t-warn">Incerto</span></td><td>A base legal do Gemini não se sustentou: o decreto é falso (V3) e o princípio da Lei 14.133 não é exigência de edital (V2).</td></tr>
+      <tr><td>Existe produto ou serviço?</td><td><span class="tag t-ok">Sim</span></td><td>Memorial técnico e plano de gestão para editais.</td></tr>
+      <tr><td>Clientes identificáveis?</td><td><span class="tag t-ok">Sim</span></td><td>Agências que disputam licitações de eventos no DF.</td></tr>
+      <tr><td>Marketing e vendas exequíveis?</td><td><span class="tag t-bad">Não, para este empreendedor</span></td><td>É trabalho mais processual e burocrático do que operacional, e foge da minha competência e do meu foco em eventos privados.</td></tr>
+      <tr><td>A janela está aberta?</td><td><span class="tag t-warn">Incerto</span></td><td>Depende de exigências em edital que não consegui comprovar.</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Reprovada.</strong> É o caso mais claro de como um único dado inventado sustentava uma oportunidade inteira.</p>
+  <div class="pager"><a href="#protocolo">← Protocolo</a><a href="#conclusao">Próximo: Conclusão →</a></div>
+</section>
+
+<!-- ============ 5. CONCLUSÃO ============ -->
+<section class="page" id="conclusao">
+  <h2>5. Conclusão</h2>
+
+  <h3>A oportunidade que eu defendo</h3>
+  <p>Defendo um negócio de <strong>gestão de resíduos em eventos com relatório de impacto ambiental integrado</strong>, voltado a eventos privados em Brasília: stands, experiências de marca e ações publicitárias. É a única oportunidade que apareceu nas três IAs, e a única cuja base legal resistiu à checagem (V1). Ela também cabe no capital disponível, desde que comece sem frota nem estoque, apoiada em cooperativas parceiras.</p>
+  <p>O argumento central é que a geração de resíduos em grandes eventos ainda é pouco olhada. As empresas cada vez mais tratam o descarte correto como requisito, e terceirizar para um especialista faz sentido para elas. A operação gera os dados, e o relatório transforma esses dados em algo que a empresa usa na própria marca. Isso justifica um preço acima de uma limpeza comum.</p>
+  <p>Com uma ressalva honesta: a obrigação legal vale com força para eventos em espaços públicos. Nos privados, a demanda é de mercado. Como o ChatGPT apontou e eu concordo, ainda não há dado público confiável de preço, margem ou número de concorrentes. O próximo passo, portanto, não é investir os R$ 50 mil, mas vender um piloto e medir.</p>
+
+  <h3>O que aprendi sobre encadear IAs</h3>
+  <p><strong>As IAs erram, inventam e criam.</strong> Não dá para tratar a resposta como verdade, nem em projetos pessoais nem em negócios. Os erros também não têm o mesmo peso. Pela minha avaliação, em ordem de gravidade:</p>
+  <ol class="tight">
+    <li><strong>Inventar um fato</strong> (o decreto do Gemini) é o mais grave, porque pode afundar um negócio que acredite nele. Neste caso, ele sustentava uma oportunidade inteira.</li>
+    <li><strong>Criar relações que não existiam</strong> (a síntese usando uma IA para julgar outra) pesa menos, mas é o erro mais difícil de pegar. A frase é real e só a ligação é falsa, então passa por uma checagem rápida.</li>
+    <li><strong>Ignorar o formato</strong> (o DeepSeek) parece o mais tolerável, já que cada modelo lê o prompt do seu jeito. Mas teve um custo escondido: sem o checklist e sem as descartadas, as afirmações dele chegaram à síntese sem passar pelo filtro.</li>
+  </ol>
+  <p><strong>Auditar não é opcional, mas é exatamente o que as pessoas vão querer pular.</strong> O movimento natural é seguir em frente com o que a IA disse, por praticidade e falta de tempo. Esta atividade mostrou quanto custa não fazer isso: o erro mais grave só apareceu na checagem em fonte oficial, que é a etapa mais demorada. Uma síntese fiel às origens ainda assim propagou um decreto falso, porque fidelidade não é verdade.</p>
+  <p>Por isso acho que o valor, daqui para frente, estará em quem souber <strong>gerir a IA</strong>: desenhar o prompt com régua, controlar de onde vem cada informação e manter a parte consciente do trabalho, em vez de automatizar tudo. Esse hábito deveria ser ensinado nas faculdades, como esta atividade faz, e as próprias ferramentas deveriam deixar mais claro o que é fato verificado e o que é texto gerado.</p>
+  <div class="pager"><a href="#auditoria">← Síntese auditada</a><a href="#anexos">Anexos →</a></div>
+</section>
+
+<!-- ============ ANEXOS ============ -->
+<section class="page" id="anexos">
+  <h2>Anexos</h2>
+  <p class="lede">As quatro respostas completas, sem edição, inclusive os resíduos de formatação da cópia. Também estão disponíveis em PDF.</p>
+  <p class="sans"><a class="btn" href="anexos.pdf">Baixar os anexos em PDF</a></p>
+  <details><summary>Anexo 1 · IA-A: ChatGPT (resposta ao prompt-mestre)</summary><div class="annex"><h1
+id="estudo-de-oportunidades-de-negócio-eventos-com-sustentabilidade-ambiental-em-brasília-e-entorno--20262030">Estudo
+de oportunidades de negócio: eventos com sustentabilidade ambiental em
+Brasília e Entorno — 2026–2030</h1>
+<p>Data de corte: 10 de outubro de 2026. Pesquisa na web realizada em
+10/10/2026. Região: Distrito Federal e Entorno. Perfil de implantação:
+micro ou pequena empresa, equipe inicial de até cinco pessoas e capital
+próprio de até R$ 50 mil.</p>
+<h2 id="1-conclusão-executiva">1. Conclusão executiva</h2>
+<p>Minha conclusão é que o caminho mais defensável não é abrir uma
+produtora de eventos sustentáveis generalista. É vender serviços
+especializados que resolvam obrigações operacionais, dificuldades de
+comprovação ambiental e exigências de contratação de quem já organiza
+eventos.</p>
+<p>A evidência normativa mais concreta está no próprio Distrito Federal:
+a legislação distrital atribui aos responsáveis por eventos realizados
+em vias, logradouros ou espaços públicos obrigações relativas à limpeza
+e ao gerenciamento dos resíduos. A Lei nº 14.133/2021, por sua vez,
+inclui o desenvolvimento nacional sustentável entre os princípios das
+contratações públicas. DFLegis</p>
+<p>+1</p>
+<p>[FATO] Essas normas estabelecem responsabilidades e princípios
+jurídicos. [INFERÊNCIA] Elas criam uma base comercial para serviços
+especializados, mas não demonstram, por si só, quantos clientes pagarão,
+qual será o preço contratado ou qual a margem de lucro.</p>
+<p>As três oportunidades aprovadas abaixo são, portanto, hipóteses
+comerciais qualificadas para validação, não negócios cuja rentabilidade
+já esteja comprovada por dados públicos. A ordem considera aderência ao
+capital disponível, clareza do comprador, facilidade de iniciar sem
+infraestrutura própria e existência de um problema concreto.</p>
+<p>Irani e Trashin fazem gestão de resíduos do South Summit Brazil -
+Economia SC</p>
+<h3 id="1-gestão-operacional-de-resíduos-em-eventos">1. Gestão
+operacional de resíduos em eventos</h3>
+<p>Mais defensável</p>
+<p>[INFERÊNCIA] Serviço executado por evento, com planejamento de
+descarte, coordenação de fornecedores e documentação de destinação. Tem
+a ligação mais direta com uma obrigação operacional identificável.</p>
+<p>Sustainable Sports: How Banff Marathon Achieved Zero Waste - ESRAG -
+Environmental Sustainability Rotary Action Group</p>
+<h3 id="2-relatórios-de-impacto-ambiental-para-eventos">2. Relatórios de
+impacto ambiental para eventos</h3>
+<p>[INFERÊNCIA] Serviço de mensuração e evidências para contratantes,
+patrocinadores e organizadores que precisam demonstrar o resultado das
+ações ambientais.</p>
+<p>Pluo | Pluo</p>
+<h3
+id="3-reutilização-e-compras-sustentáveis-para-eventos-recorrentes">3.
+Reutilização e compras sustentáveis para eventos recorrentes</h3>
+<p>[INFERÊNCIA] Consultoria e coordenação de fornecedores para reduzir
+descartáveis, materiais de uso único e compras desnecessárias, sem
+imobilizar capital em estoque próprio.</p>
+<p>Limitação central da pesquisa: não foi localizada evidência pública
+suficientemente robusta para estabelecer o tamanho monetário do mercado
+de eventos sustentáveis no DF, a margem bruta típica desses serviços, o
+número de concorrentes especializados ou o custo de aquisição de
+clientes. Esses campos serão identificados como [SEM DADO CONFIÁVEL],
+quando aplicável, em vez de receber estimativas inventadas.</p>
+<h2 id="2-base-factual-e-critérios-de-leitura">2. Base factual e
+critérios de leitura</h2>
+<p>As marcações usadas neste estudo são:</p>
+<ul>
+<li>[FATO] — informação sustentada por fonte identificada.</li>
+<li>[INFERÊNCIA] — interpretação comercial, hipótese estratégica ou
+conclusão que ainda precisa ser testada.</li>
+<li>[SEM DADO CONFIÁVEL] — não foi encontrada fonte aceita que permita
+responder com segurança.</li>
+</ul>
+<p>Fontes prioritárias consultadas: legislação federal e distrital,
+órgãos públicos e materiais institucionais do Sebrae. A pesquisa foi
+realizada na web; as fontes abaixo foram acessadas em 10/10/2026. A data
+de publicação de cada fonte é indicada separadamente de sua data de
+consulta.</p>
+<h3 id="evidências-que-sustentam-a-seleção">Evidências que sustentam a
+seleção</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Evidência</th>
+<th>Fonte e ano</th>
+<th>O que permite concluir</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>[FATO] A Lei Distrital nº 5.610 trata da responsabilidade dos
+grandes geradores e inclui regras específicas para eventos em espaços
+públicos.</td>
+<td>GDF, Lei nº 5.610/2016, com alteração pela Lei nº 6.484/2020.
+DFLegis<br>+1</td>
+<td>Há uma base jurídica concreta para serviços de gerenciamento de
+resíduos, respeitados o escopo e as condições da legislação.</td>
+</tr>
+<tr class="even">
+<td>[FATO] A Política Nacional de Resíduos Sólidos estabelece
+responsabilidades dos geradores e a prioridade de não geração, redução,
+reutilização, reciclagem, tratamento e destinação adequada.</td>
+<td>Governo Federal, Lei nº 12.305/2010. Planalto<br>+1</td>
+<td>Fundamenta soluções de prevenção, segregação e encaminhamento de
+resíduos. Não prova demanda comercial por um prestador específico.</td>
+</tr>
+<tr class="odd">
+<td>[FATO] O desenvolvimento nacional sustentável está entre os
+princípios previstos na Lei nº 14.133/2021.</td>
+<td>Governo Federal, Lei nº 14.133/2021, art. 5º. Planalto<br>+1</td>
+<td>Oferece fundamento para considerar critérios ambientais em
+contratações públicas, sem garantir que determinado edital exigirá esses
+serviços.</td>
+</tr>
+<tr class="even">
+<td>[FATO] O Sebrae mantém conteúdo institucional sobre planejamento de
+eventos sustentáveis, integração ESG e compras sustentáveis.</td>
+<td>Sebrae, publicações institucionais de 2025. Centro Sebrae de
+Sustentabilidade (CSS)</td>
+<td>Confirma que o assunto faz parte da agenda de orientação
+empresarial; não quantifica clientes dispostos a pagar.</td>
+</tr>
+<tr class="odd">
+<td>[FATO] O IBGE publicou indicadores de receita nominal de serviços
+para o DF em 2024, incluindo atividades de serviços profissionais,
+administrativos e complementares.</td>
+<td>IBGE, Pesquisa Mensal de Serviços, junho de 2024. IBGE FTP</td>
+<td>É contexto para o setor de serviços, não uma medida do mercado de
+eventos sustentáveis.</td>
+</tr>
+</tbody>
+</table>
+<p>A seguir, os cinco filtros de Dornelas serão aplicados a cada
+oportunidade. Para evitar falsa precisão, os valores comerciais usados
+como referência serão tratados como preços-teste propostos, e não como
+preços médios de mercado observados.</p>
+<h1
+id="oportunidade-1--gestão-operacional-de-resíduos-em-eventos">Oportunidade
+1 — Gestão operacional de resíduos em eventos</h1>
+<h2 id="1-nome-da-oportunidade">1. Nome da oportunidade</h2>
+<p>Gestão de resíduos como serviço para produtores de eventos, com
+segregação, coordenação de destinação e dossiê de comprovação.</p>
+<p>[INFERÊNCIA] A empresa não precisa começar como coletora de resíduos,
+transportadora ou proprietária de equipamentos. Seu produto principal é
+planejar e coordenar a operação no local, contratar parceiros
+habilitados quando necessário e entregar evidências organizadas ao
+cliente.</p>
+<h2 id="2-tendência-de-origem">2. Tendência de origem</h2>
+<p>[FATO] A Política Nacional de Resíduos Sólidos estabelece a
+responsabilidade dos geradores e a prioridade de redução, reutilização e
+reciclagem. A Lei Distrital nº 5.610/2016, alterada em 2020, determina
+obrigações específicas para responsáveis por eventos em espaços
+públicos, inclusive limpeza, segregação e destinação dos resíduos.
+Planalto</p>
+<p>+1</p>
+<p>Tendência: maior formalização do gerenciamento de resíduos e busca
+por destinação ambientalmente adequada.</p>
+<p>Oportunidade: atender produtores que precisam coordenar a operação e
+comprovar o que fizeram, sem desenvolver internamente uma equipe
+especializada.</p>
+<p>[INFERÊNCIA] A legislação é um indutor de demanda potencial, mas a
+procura efetiva por prestadores independentes precisa ser comprovada por
+entrevistas, editais e contratos.</p>
+<h2 id="3-problema-específico--cliente-nomeável">3. Problema específico
++ cliente nomeável</h2>
+<p>[INFERÊNCIA] O comprador inicial mais adequado é uma produtora de
+festivais, feiras ou eventos corporativos que realize eventos
+presenciais recorrentes em Brasília e precise coordenar limpeza,
+triagem, retirada e documentação de resíduos.</p>
+<p>Exemplos de contas para prospecção, não de clientes já
+confirmados:</p>
+<ul>
+<li>Organizadores de festivais realizados na região da Granja do
+Torto.</li>
+<li>Produtoras de feiras empresariais e congressos em centros de
+convenções do DF.</li>
+<li>Empresas que organizam eventos institucionais em espaços
+públicos.</li>
+</ul>
+<p>[FATO] A legislação distrital inclui expressamente os promotores de
+eventos realizados em vias, logradouros ou espaços públicos entre os
+responsáveis pelo gerenciamento dos resíduos gerados. DFLegis</p>
+<h2 id="4-cinco-perguntas-de-triagem">4. Cinco perguntas de triagem</h2>
+<p>1. Quem exatamente tem esse problema?</p>
+<p>[INFERÊNCIA] O diretor de produção ou coordenador de operações de uma
+produtora que responde pela execução do evento. Em eventos públicos, o
+promotor é um comprador prioritário, desde que o serviço esteja dentro
+de suas responsabilidades contratuais.</p>
+<p>2. Quanto dói?</p>
+<p>[FATO] A legislação distrital prevê sanções administrativas que
+incluem multa e outras medidas. A página oficial consultada indica multa
+diária limitada a R$ 2.000 e multa simples de até R$ 20.000 por
+infração, nos termos da Lei nº 5.610/2016. Esses são limites legais, não
+valores médios de multas aplicadas. DFLegis</p>
+<p>[INFERÊNCIA] Além do risco regulatório, uma operação mal coordenada
+pode gerar retrabalho, custos adicionais de limpeza, conflitos com o
+espaço contratado e dificuldade para comprovar a destinação. O custo
+médio desses problemas para produtores do DF é [SEM DADO CONFIÁVEL].</p>
+<p>3. Quem paga, e com que dinheiro?</p>
+<p>[INFERÊNCIA] A produtora, promotora ou empresa contratada para
+executar o evento paga com o orçamento de produção, limpeza, logística
+ou gestão ambiental. Em contratação pública, o pagamento depende do
+objeto previsto, da disponibilidade orçamentária e das regras do
+processo de contratação.</p>
+<p>4. Por que este empreendedor, e não o incumbente?</p>
+<p>[INFERÊNCIA] A vantagem inicial não é uma tecnologia exclusiva: é
+oferecer um serviço especializado, leve em ativos, com comunicação
+comercial, coordenação de parceiros locais e relatório padronizado. A
+experiência em marketing ajuda a vender o serviço e traduzir resultados
+operacionais para o patrocinador.</p>
+<p>A defesa contra cópia é limitada. O que pode dificultar a
+substituição é construir uma rede confiável de operadores, cooperativas
+e destinatários, além de histórico de execução documentada. Sem isso, a
+vantagem competitiva não está comprovada.</p>
+<p>5. Por que agora, e não em 2020 ou 2035?</p>
+<p>[FATO] As obrigações distritais já existiam antes de 2020 e foram
+alteradas pela Lei nº 6.484/2020. Portanto, não seria correto afirmar
+que essa necessidade nasceu em 2026. DFLegis</p>
+<p>+1</p>
+<p>[INFERÊNCIA] A janela de 2026–2027 é de entrada comercial, não de
+mudança regulatória recém-criada: a empresa pode começar enxuta,
+desenvolver processos replicáveis e atender organizadores que prefiram
+terceirizar a coordenação. A urgência atual de compra por um conjunto
+específico de produtores permanece a validar.</p>
+<h2 id="5-3ms">5. 3Ms</h2>
+<h3 id="51-demanda-de-mercado">5.1 Demanda de mercado</h3>
+<ul>
+<li>Público-alvo: produtoras de eventos, promotores de festivais,
+organizadores de feiras e empresas contratadas para eventos em espaços
+públicos.</li>
+<li>Durabilidade: [INFERÊNCIA] o problema tende a persistir enquanto
+houver eventos presenciais com geração de resíduos e obrigações de
+gerenciamento.</li>
+<li>Acesso comercial: prospecção direta de produtoras, contatos com
+gestores de espaços, parcerias com empresas de limpeza e participação em
+processos de cotação.</li>
+<li>Custo de captação recuperado em menos de um ano? [SEM DADO
+CONFIÁVEL]. Só é possível responder após medir o custo comercial e a
+margem de contratos efetivamente fechados.</li>
+</ul>
+<h3 id="52-tamanho-e-estrutura">5.2 Tamanho e estrutura</h3>
+<ul>
+<li>Estrutura: [INFERÊNCIA] mercado potencialmente fragmentado na
+prestação de serviços complementares, mas com concorrentes estabelecidos
+em limpeza, coleta, logística e produção de eventos.</li>
+<li>Barreiras de entrada: confiabilidade operacional, rede de parceiros,
+segurança no trabalho, capacidade de operar sob prazos rígidos e
+documentação.</li>
+<li>Custos de saída: [INFERÊNCIA] relativamente baixos se a empresa não
+adquirir veículos, máquinas ou estoque; há, contudo, custos de
+encerramento de contratos e compromissos com prestadores.</li>
+<li>Número de competidores-chave no DF: [SEM DADO CONFIÁVEL].</li>
+<li>Estágio do ciclo de vida: [INFERÊNCIA] o serviço especializado pode
+ser desenvolvido como nicho, mas não há dados suficientes para
+classificar quantitativamente o mercado local como emergente ou em
+crescimento.</li>
+</ul>
+<h3 id="53-análise-de-margem">5.3 Análise de margem</h3>
+<ul>
+<li>Forças: obrigação operacional identificável, possibilidade de
+contratação por evento e necessidade limitada de ativos próprios.</li>
+<li>Margem bruta possível: [SEM DADO CONFIÁVEL]. Deve ser calculada como
+receita do serviço menos mão de obra diretamente alocada, parceiros,
+transporte contratado, consumíveis e outros custos diretos.</li>
+<li>Ponto de equilíbrio: receita de contribuição suficiente para pagar
+despesas fixas, pró-labore e tributos. Número de eventos necessário:
+[SEM DADO CONFIÁVEL], até que existam cotações e custos reais.</li>
+<li>Retorno: não demonstrado. A validação deve comparar o capital
+efetivamente investido com o fluxo de caixa operacional recebido.</li>
+<li>Cadeia de valor: produtor/promotor → empresa de gestão operacional →
+equipes de segregação e limpeza → cooperativas e prestadores de
+coleta/destinação → contratante recebe relatório e comprovantes.</li>
+</ul>
+<h2
+id="6-modelo-de-negócio-como-gera-receita-e-quais-custos-e-investimentos-exige">6.
+Modelo de negócio: como gera receita e quais custos e investimentos
+exige</h2>
+<p>[INFERÊNCIA] Modelo recomendado: serviço por evento, com escopo e
+entregáveis definidos previamente.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Componente</th>
+<th>Proposta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Quem paga</td>
+<td>Produtora, promotor ou contratante do evento.</td>
+</tr>
+<tr class="even">
+<td>Por que paga</td>
+<td>Para organizar a operação de resíduos, reduzir falhas e manter
+evidências de execução e destinação.</td>
+</tr>
+<tr class="odd">
+<td>Receita</td>
+<td>Taxa de planejamento e coordenação; adicional por dias de operação,
+complexidade e equipe mobilizada.</td>
+</tr>
+<tr class="even">
+<td>Custos diretos</td>
+<td>Equipe de campo, deslocamento, equipamentos de proteção, materiais
+de sinalização e fornecedores terceirizados.</td>
+</tr>
+<tr class="odd">
+<td>Investimento inicial</td>
+<td>[INFERÊNCIA] computador e software básico, identidade comercial,
+instrumentos de pesagem quando necessários, materiais reutilizáveis e
+capital de giro.</td>
+</tr>
+<tr class="even">
+<td>Capital máximo do empreendedor</td>
+<td>R$ 50.000, conforme o cenário definido para este estudo; não
+representa orçamento de implantação já cotado.</td>
+</tr>
+</tbody>
+</table>
+<p>Preço de venda: [SEM DADO CONFIÁVEL]. Não recomendo fixar uma tabela
+comercial definitiva antes de levantar custos de campo, obter cotações
+de parceiros e entrevistar compradores.</p>
+<h2 id="7-enquadramento-nos-cinco-modelos-de-negócio-na-web">7.
+Enquadramento nos cinco modelos de negócio na web</h2>
+<p>Modelo empresarial (B2B): é o enquadramento principal, pois a empresa
+presta um serviço contratado por outra organização.</p>
+<p>Não é principalmente intermediação de negócios, pois o valor central
+está na coordenação e execução operacional. Não é comercialização de
+propaganda, mercado virtual ou rede social, embora ferramentas digitais
+simples possam apoiar a documentação e a comunicação com clientes.</p>
+<h2 id="8-checklist-final-de-dornelas">8. Checklist final de
+Dornelas</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Pergunta de corte</th>
+<th>Resultado</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Existe um problema?</td>
+<td>Sim</td>
+<td>Há obrigações de gerenciamento de resíduos e limpeza para eventos
+abrangidos pela legislação distrital.</td>
+</tr>
+<tr class="even">
+<td>2. Existe um serviço que soluciona o problema?</td>
+<td>Sim</td>
+<td>Planejamento, coordenação, segregação e documentação são entregáveis
+definidos.</td>
+</tr>
+<tr class="odd">
+<td>3. Os potenciais clientes são identificáveis?</td>
+<td>Sim</td>
+<td>Produtoras, promotores e contratadas para eventos públicos podem ser
+prospectados nominalmente.</td>
+</tr>
+<tr class="even">
+<td>4. Marketing e vendas são exequíveis em custo e retorno?</td>
+<td>Sim, com condição</td>
+<td>É possível começar por prospecção direta e parcerias, mas o custo de
+aquisição e o retorno ainda precisam ser medidos.</td>
+</tr>
+<tr class="odd">
+<td>5. A janela está aberta?</td>
+<td>Sim, com condição</td>
+<td>Há um problema legal e operacional concreto; a existência de demanda
+comercial suficiente ainda deve ser validada.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-principal-risco-e-o-que-invalidaria-a-oportunidade">9.
+Principal risco e o que invalidaria a oportunidade</h2>
+<p>O risco central é o comprador preferir contratar uma empresa de
+limpeza ou produção que já inclua a gestão de resíduos no pacote.</p>
+<p>A oportunidade deve ser reavaliada se entrevistas com produtores
+mostrarem que eles não contratam o serviço separadamente, que os custos
+operacionais tornam o preço inviável ou que prestadores existentes
+resolvem o problema de forma mais simples e econômica.</p>
+<h2 id="10-tabela-de-evidências">10. Tabela de evidências</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Afirmação</th>
+<th>Número</th>
+<th>Fonte</th>
+<th>Ano</th>
+<th>O que o número mede</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>[FATO] A lei distrital prevê limite para multa diária.</td>
+<td>Até R$ 2.000/dia</td>
+<td>GDF, Lei nº 5.610, art. 9º. DFLegis</td>
+<td>2016, com alteração em 2020</td>
+<td>Limite legal da multa diária, não média de penalidades
+aplicadas.</td>
+</tr>
+<tr class="even">
+<td>[FATO] A lei distrital prevê multa simples por infração.</td>
+<td>Até R$ 20.000</td>
+<td>GDF, Lei nº 5.610, art. 9º. DFLegis</td>
+<td>2016, com alteração em 2020</td>
+<td>Limite legal nominal indicado no texto consultado, não custo médio
+de não conformidade.</td>
+</tr>
+<tr class="odd">
+<td>[FATO] Há obrigações específicas para eventos em espaços
+públicos.</td>
+<td>[Não se aplica]</td>
+<td>GDF, Lei nº 5.610, art. 11. DFLegis</td>
+<td>2016, com alteração em 2020</td>
+<td>Existência de deveres de limpeza, gerenciamento e segregação; não
+mede receita potencial.</td>
+</tr>
+<tr class="even">
+<td>[FATO] O princípio do desenvolvimento nacional sustentável integra a
+lei geral de licitações.</td>
+<td>[Não se aplica]</td>
+<td>Governo Federal, Lei nº 14.133, art. 5º. Planalto</td>
+<td>2021</td>
+<td>Princípio legal, não volume de contratos sustentáveis.</td>
+</tr>
+<tr class="odd">
+<td>[INFERÊNCIA] A operação pode ser iniciada sem frota própria.</td>
+<td>[Não se aplica]</td>
+<td>Desenho operacional proposto</td>
+<td>2026</td>
+<td>Escolha de modelo de execução com parceiros, não dado de
+mercado.</td>
+</tr>
+<tr class="even">
+<td>Receita anual acessível no DF para esse serviço</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>Não localizada fonte pública adequada</td>
+<td>—</td>
+<td>Receita específica do nicho.</td>
+</tr>
+<tr class="odd">
+<td>Margem bruta média dos prestadores locais</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>Não localizada fonte pública adequada</td>
+<td>—</td>
+<td>Rentabilidade típica do mercado local.</td>
+</tr>
+<tr class="even">
+<td>Número de concorrentes especializados no DF</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>Não localizado levantamento abrangente</td>
+<td>—</td>
+<td>Quantidade de competidores diretos.</td>
+</tr>
+</tbody>
+</table>
+<h1
+id="oportunidade-2--relatórios-de-impacto-ambiental-para-eventos">Oportunidade
+2 — Relatórios de impacto ambiental para eventos</h1>
+<h2 id="1-nome-da-oportunidade-1">1. Nome da oportunidade</h2>
+<p>Mensuração e documentação ambiental por evento, com relatório de
+indicadores verificáveis para contratantes e patrocinadores.</p>
+<h2 id="2-tendência-de-origem-1">2. Tendência de origem</h2>
+<p>[FATO] O Sebrae mantém materiais institucionais dedicados a
+planejamento de eventos sustentáveis, integração ESG e compras
+sustentáveis. Centro Sebrae de Sustentabilidade (CSS)</p>
+<p>Tendência: organizações buscam estruturar práticas ambientais e
+apresentar informações que possam ser verificadas.</p>
+<p>Oportunidade: oferecer ao organizador um serviço de coleta de dados,
+organização de evidências e produção de um relatório ambiental
+específico para cada evento.</p>
+<p>[INFERÊNCIA] O espaço comercial está na documentação operacional útil
+ao cliente, e não na promessa genérica de que um evento será “verde”. A
+demanda por relatórios pagos de eventos no DF ainda não foi
+quantificada.</p>
+<h2 id="3-problema-específico--cliente-nomeável-1">3. Problema
+específico + cliente nomeável</h2>
+<p>[INFERÊNCIA] O cliente inicial mais promissor é uma agência de
+comunicação ou produtora que precise prestar contas a um patrocinador,
+cliente corporativo ou instituição contratante sobre as ações ambientais
+executadas.</p>
+<p>Contas para prospecção:</p>
+<ul>
+<li>Produtoras que organizam eventos para grandes empresas e
+instituições financeiras.</li>
+<li>Agências que gerenciam ativações de marca e eventos
+corporativos.</li>
+<li>Fornecedores de eventos contratados por entidades públicas que
+incluam indicadores ambientais no escopo.</li>
+</ul>
+<p>O serviço pode incluir pesagem e classificação de resíduos, registro
+de fornecedores, inventário de materiais reutilizados, comprovação de
+destinação e relatório final. Indicadores de carbono só devem ser
+apresentados com metodologia, fronteiras e fatores de emissão
+explícitos.</p>
+<h2 id="4-cinco-perguntas-de-triagem-1">4. Cinco perguntas de
+triagem</h2>
+<p>1. Quem exatamente tem esse problema?</p>
+<p>[INFERÊNCIA] O gerente de marketing, de sustentabilidade ou de
+eventos da empresa contratante, ou o diretor de atendimento da agência
+que precisa entregar evidências ao cliente final.</p>
+<p>2. Quanto dói?</p>
+<p>[INFERÊNCIA] A ausência de evidências pode causar retrabalho,
+comprometer a prestação de contas e dificultar a comprovação de
+compromissos ambientais. O custo médio financeiro desse problema em
+Brasília é [SEM DADO CONFIÁVEL].</p>
+<p>3. Quem paga, e com que dinheiro?</p>
+<p>[INFERÊNCIA] A produtora ou agência paga com o orçamento de execução,
+atendimento ou mensuração do projeto. Em alguns contratos, o comprador
+final pode ser a empresa patrocinadora ou contratante, caso o relatório
+esteja previsto como entrega específica.</p>
+<p>4. Por que este empreendedor, e não o incumbente?</p>
+<p>[INFERÊNCIA] A combinação de marketing, organização de informação e
+comunicação executiva permite transformar dados operacionais em um
+relatório claro, com evidências anexas e linguagem adequada à marca do
+cliente.</p>
+<p>A defesa competitiva seria uma metodologia padronizada, uma base
+histórica de indicadores e capacidade de mobilizar fornecedores para
+coleta de dados. A experiência em marketing, isoladamente, não constitui
+barreira suficiente.</p>
+<p>5. Por que agora, e não em 2020 ou 2035?</p>
+<p>[FATO] A Lei nº 14.133/2021 incluiu o desenvolvimento nacional
+sustentável entre os princípios aplicáveis às contratações públicas.
+Planalto</p>
+<p>[INFERÊNCIA] A janela comercial consiste em atender projetos que já
+precisam de comprovação e querem terceirizar essa tarefa. Não há
+evidência suficiente para afirmar que os contratantes do DF passaram a
+exigir relatórios ambientais com maior frequência em 2026.</p>
+<h2 id="5-3ms-1">5. 3Ms</h2>
+<h3 id="51-demanda-de-mercado-1">5.1 Demanda de mercado</h3>
+<ul>
+<li>Público-alvo: agências de comunicação, produtoras de eventos
+corporativos, departamentos de sustentabilidade e contratantes
+institucionais.</li>
+<li>Durabilidade: [INFERÊNCIA] o serviço pode ser recorrente se o
+cliente realizar diversos eventos por ano.</li>
+<li>Acesso aos clientes: venda consultiva direta para gestores de
+marketing, compras, eventos e sustentabilidade; parcerias com produtoras
+que não tenham equipe de mensuração.</li>
+<li>Recuperação do custo de captação em menos de um ano: [SEM DADO
+CONFIÁVEL]. Depende da taxa de conversão, da recorrência e do custo de
+produção dos relatórios.</li>
+</ul>
+<h3 id="52-tamanho-e-estrutura-1">5.2 Tamanho e estrutura</h3>
+<ul>
+<li>Estrutura: [INFERÊNCIA] serviço de consultoria especializada, com
+barreiras de entrada moderadas quando envolve metodologia e controle de
+qualidade.</li>
+<li>Barreiras de entrada: consistência dos dados, rastreabilidade,
+clareza metodológica e capacidade de verificar informações de
+fornecedores.</li>
+<li>Custos de saída: [INFERÊNCIA] baixos em termos de ativos físicos,
+mas o cliente pode manter histórico e modelos próprios, reduzindo a
+recorrência.</li>
+<li>Número de competidores-chave no DF: [SEM DADO CONFIÁVEL].</li>
+<li>Estágio do ciclo de vida: [INFERÊNCIA] serviço viável como nicho de
+consultoria; não há dados suficientes para classificar o mercado local
+como emergente ou maduro.</li>
+</ul>
+<h3 id="53-análise-de-margem-1">5.3 Análise de margem</h3>
+<ul>
+<li>Forças: pouco capital físico, entrega digital, possibilidade de
+padronizar modelos e vender a mesma metodologia a diferentes
+clientes.</li>
+<li>Margem bruta possível: [SEM DADO CONFIÁVEL]. O principal custo
+direto será o tempo técnico dedicado à coleta, validação e elaboração do
+relatório.</li>
+<li>Ponto de equilíbrio: depende do número de projetos pagos necessário
+para cobrir despesas fixas e remuneração do responsável. [SEM DADO
+CONFIÁVEL].</li>
+<li>Retorno: não demonstrado; exige medir horas por relatório, custo de
+deslocamento, revisões e taxa de recompra.</li>
+<li>Cadeia de valor: organizador → coleta de dados com fornecedores →
+validação documental → análise de indicadores → relatório entregue à
+produtora ou contratante.</li>
+</ul>
+<h2 id="6-modelo-de-negócio-receita-custos-e-investimentos">6. Modelo de
+negócio: receita, custos e investimentos</h2>
+<p>[INFERÊNCIA] Modelo recomendado: cobrança por relatório, com opções
+adicionais de acompanhamento durante o evento e consolidação anual para
+clientes recorrentes.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Componente</th>
+<th>Proposta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Quem paga</td>
+<td>Produtora, agência ou contratante que necessite comprovar
+resultados.</td>
+</tr>
+<tr class="even">
+<td>Por que paga</td>
+<td>Para obter informação organizada, rastreável e pronta para prestação
+de contas.</td>
+</tr>
+<tr class="odd">
+<td>Receita</td>
+<td>Diagnóstico pré-evento, monitoramento, relatório final e
+acompanhamento de carteira de eventos.</td>
+</tr>
+<tr class="even">
+<td>Custos diretos</td>
+<td>Horas técnicas, deslocamentos, coleta de dados, ferramentas digitais
+e contratação pontual de especialistas.</td>
+</tr>
+<tr class="odd">
+<td>Investimento inicial</td>
+<td>Computador, ferramentas de análise, modelos de documentação,
+capacitação e prospecção comercial.</td>
+</tr>
+<tr class="even">
+<td>Capital de implantação</td>
+<td>[INFERÊNCIA] compatível com operação enxuta, desde que não se
+prometa auditoria acreditada ou certificação própria.</td>
+</tr>
+</tbody>
+</table>
+<p>Preço de venda: [SEM DADO CONFIÁVEL]. Deve ser calculado com base no
+esforço real e no valor percebido pelo comprador, sem confundir
+orçamento proposto com preço praticado pelo mercado.</p>
+<h2 id="7-enquadramento-nos-cinco-modelos-de-negócio-na-web-1">7.
+Enquadramento nos cinco modelos de negócio na web</h2>
+<p>Modelo empresarial (B2B): a empresa vende análise e documentação a
+organizações.</p>
+<p>Não é necessário criar um mercado virtual ou uma rede social. A
+tecnologia funciona como suporte à entrega, não como fonte principal de
+receita.</p>
+<h2 id="8-checklist-final-de-dornelas-1">8. Checklist final de
+Dornelas</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Pergunta de corte</th>
+<th>Resultado</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Existe um problema?</td>
+<td>Sim</td>
+<td>Organizações podem precisar comprovar resultados ambientais de
+projetos e eventos.</td>
+</tr>
+<tr class="even">
+<td>2. Existe um serviço que soluciona o problema?</td>
+<td>Sim</td>
+<td>Coleta, validação e apresentação de indicadores são entregáveis
+concretos.</td>
+</tr>
+<tr class="odd">
+<td>3. Os potenciais clientes são identificáveis?</td>
+<td>Sim</td>
+<td>Agências, produtoras e contratantes com obrigação de prestação de
+contas podem ser prospectados.</td>
+</tr>
+<tr class="even">
+<td>4. Marketing e vendas são exequíveis?</td>
+<td>Sim, com condição</td>
+<td>A venda direta é viável em tese, mas o custo de captação e a
+disposição a pagar ainda precisam ser medidos.</td>
+</tr>
+<tr class="odd">
+<td>5. A janela está aberta?</td>
+<td>Sim, com condição</td>
+<td>Há base institucional para a agenda ambiental; falta demonstrar a
+intensidade da demanda comercial local.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-principal-risco-e-o-que-invalidaria-a-oportunidade-1">9.
+Principal risco e o que invalidaria a oportunidade</h2>
+<p>O principal risco é o cliente considerar o relatório uma entrega que
+sua própria agência já consegue produzir sem custo adicional.</p>
+<p>A oportunidade perde força se as entrevistas mostrarem que os
+contratantes não pagam separadamente pela mensuração, que as evidências
+solicitadas são mínimas ou que os relatórios não influenciam a renovação
+dos contratos nem a seleção de fornecedores.</p>
+<h2 id="10-tabela-de-evidências-1">10. Tabela de evidências</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Afirmação</th>
+<th>Número</th>
+<th>Fonte</th>
+<th>Ano</th>
+<th>O que o número mede</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>[FATO] O desenvolvimento nacional sustentável integra os princípios
+da lei de licitações.</td>
+<td>[Não se aplica]</td>
+<td>Governo Federal, Lei nº 14.133, art. 5º. Planalto</td>
+<td>2021</td>
+<td>Princípio legal aplicável às contratações abrangidas pela lei.</td>
+</tr>
+<tr class="even">
+<td>[FATO] Há materiais institucionais sobre planejamento de eventos
+sustentáveis.</td>
+<td>[Não se aplica]</td>
+<td>Sebrae, Centro Sebrae de Sustentabilidade. Centro Sebrae de
+Sustentabilidade (CSS)</td>
+<td>2025</td>
+<td>Existência de conteúdo institucional, não quantidade de
+compradores.</td>
+</tr>
+<tr class="odd">
+<td>[INFERÊNCIA] Relatórios padronizados podem ser vendidos a diferentes
+produtores.</td>
+<td>[Não se aplica]</td>
+<td>Modelo comercial proposto</td>
+<td>2026</td>
+<td>Hipótese de replicabilidade da entrega.</td>
+</tr>
+<tr class="even">
+<td>Valor anual do mercado de relatórios ambientais para eventos no
+DF</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>Não localizada fonte pública adequada</td>
+<td>—</td>
+<td>Receita do nicho.</td>
+</tr>
+<tr class="odd">
+<td>Ticket médio e margem bruta dos relatórios</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>Não localizado levantamento adequado</td>
+<td>—</td>
+<td>Preço e rentabilidade dos serviços.</td>
+</tr>
+<tr class="even">
+<td>Número de contratantes que pagam separadamente pela mensuração</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>Não localizado levantamento adequado</td>
+<td>—</td>
+<td>Demanda efetiva por serviço independente.</td>
+</tr>
+</tbody>
+</table>
+<h1
+id="oportunidade-3--reutilização-de-materiais-e-compras-sustentáveis-para-eventos-recorrentes">Oportunidade
+3 — Reutilização de materiais e compras sustentáveis para eventos
+recorrentes</h1>
+<h2 id="1-nome-da-oportunidade-2">1. Nome da oportunidade</h2>
+<p>Planejamento de compras sustentáveis e coordenação de materiais
+reutilizáveis para produtoras de eventos corporativos e
+institucionais.</p>
+<p>[INFERÊNCIA] O negócio funciona como uma assessoria de compras e
+gestão de materiais: identifica itens que podem ser alugados,
+reutilizados ou substituídos, compara fornecedores e coordena sua
+utilização. Não começa comprando estoque próprio nem fabricando
+produtos.</p>
+<h2 id="2-tendência-de-origem-2">2. Tendência de origem</h2>
+<p>[FATO] A Política Nacional de Resíduos Sólidos estabelece uma ordem
+de prioridade que inclui não geração, redução, reutilização e
+reciclagem. O Sebrae também mantém conteúdo institucional sobre compras
+sustentáveis. Planalto</p>
+<p>+1</p>
+<p>Tendência: redução de desperdícios, ampliação da reutilização de
+materiais e consideração de critérios ambientais nas compras.</p>
+<p>Oportunidade: reduzir o custo e o descarte associados a materiais
+usados repetidamente em eventos, organizando compras, locações e
+fornecedores para clientes recorrentes.</p>
+<p>[INFERÊNCIA] O valor comercial não está em vender produtos rotulados
+como ecológicos, mas em demonstrar ao comprador que a alternativa
+proposta atende às especificações do evento e faz sentido
+economicamente.</p>
+<h2 id="3-problema-específico--cliente-nomeável-2">3. Problema
+específico + cliente nomeável</h2>
+<p>[INFERÊNCIA] O cliente prioritário é uma produtora que realiza
+eventos corporativos repetidamente e precisa comprar ou produzir
+sinalização, placas, estruturas cenográficas, credenciais, brindes e
+outros materiais para cada edição.</p>
+<p>Contas a prospectar:</p>
+<ul>
+<li>Agências de eventos corporativos e de ativação de marcas.</li>
+<li>Produtoras que organizam congressos, seminários e feiras.</li>
+<li>Departamentos de marketing que contratam eventos institucionais
+recorrentes.</li>
+</ul>
+<p>A solução consiste em fazer um inventário dos materiais utilizados,
+comparar compra com locação, identificar itens reaproveitáveis, negociar
+com fornecedores e registrar a redução de compras e descartes.</p>
+<h2 id="4-cinco-perguntas-de-triagem-2">4. Cinco perguntas de
+triagem</h2>
+<p>1. Quem exatamente tem esse problema?</p>
+<p>[INFERÊNCIA] O produtor executivo ou gerente de compras de uma
+agência que organiza eventos recorrentes e controla os custos de
+montagem, comunicação visual e materiais promocionais.</p>
+<p>2. Quanto dói?</p>
+<p>[INFERÊNCIA] O problema pode aparecer na repetição de compras, no
+armazenamento, no transporte, no descarte e na necessidade de produzir
+novamente materiais semelhantes.</p>
+<p>[FATO] A legislação federal estabelece a redução e a reutilização
+como prioridades na gestão de resíduos. Planalto</p>
+<p>O gasto anual com materiais descartáveis de eventos por produtora no
+DF é [SEM DADO CONFIÁVEL]. Sem conhecer esse gasto, não é possível
+afirmar uma economia média ou uma redução percentual.</p>
+<p>3. Quem paga, e com que dinheiro?</p>
+<p>[INFERÊNCIA] A produtora ou agência paga com o orçamento de produção
+e compras. Quando o cliente final aprova e financia os materiais, o
+serviço pode ser contratado como parte do planejamento do evento.</p>
+<p>4. Por que este empreendedor, e não o incumbente?</p>
+<p>[INFERÊNCIA] O diferencial inicial seria atuar de forma independente
+entre diferentes fornecedores, comparar alternativas e manter um
+inventário que permita reutilização entre eventos. A experiência em
+marketing ajuda a conciliar identidade visual, requisitos do cliente e
+redução de desperdício.</p>
+<p>A barreira competitiva depende da construção de uma base confiável de
+fornecedores, histórico de custos e materiais padronizados. Um
+concorrente pode copiar o conceito rapidamente; portanto, a defesa
+precisa vir da execução e da recorrência dos clientes.</p>
+<p>5. Por que agora, e não em 2020 ou 2035?</p>
+<p>[FATO] A Política Nacional de Resíduos Sólidos foi instituída em 2010
+e já estabelecia prioridades de redução e reutilização. Planalto</p>
+<p>[INFERÊNCIA] A oportunidade não depende de uma mudança legal recente.
+A janela para o empreendedor decorre da possibilidade de oferecer a
+pequenas e médias produtoras uma assessoria de compras sem exigir a
+estrutura de uma empresa de locação ou fabricação. A disposição atual a
+pagar por esse serviço específico ainda precisa ser validada.</p>
+<h2 id="5-3ms-2">5. 3Ms</h2>
+<h3 id="51-demanda-de-mercado-2">5.1 Demanda de mercado</h3>
+<ul>
+<li>Público-alvo: produtoras de eventos corporativos recorrentes,
+agências de ativação e departamentos de marketing.</li>
+<li>Durabilidade: [INFERÊNCIA] tende a ser maior em clientes que
+realizam eventos repetidamente e mantêm materiais padronizados.</li>
+<li>Acesso comercial: prospecção direta de produtores, parcerias com
+locadoras, gráficas, montadoras e fornecedores de comunicação
+visual.</li>
+<li>Recuperação do custo de captação em menos de um ano: [SEM DADO
+CONFIÁVEL]. Depende da economia efetivamente obtida, da taxa de
+remuneração do serviço e da recorrência.</li>
+</ul>
+<h3 id="52-tamanho-e-estrutura-2">5.2 Tamanho e estrutura</h3>
+<ul>
+<li>Estrutura: [INFERÊNCIA] serviço de compras e coordenação inserido em
+uma cadeia fragmentada de fornecedores.</li>
+<li>Barreiras de entrada: conhecimento dos materiais, confiabilidade dos
+parceiros, capacidade de comparar custos totais e compatibilidade
+técnica e visual.</li>
+<li>Custos de saída: [INFERÊNCIA] baixos para uma assessoria sem
+estoque; maiores se a empresa passar a armazenar ou transportar
+materiais.</li>
+<li>Número de competidores-chave no DF: [SEM DADO CONFIÁVEL].</li>
+<li>Estágio do ciclo de vida: [INFERÊNCIA] a assessoria especializada
+pode ser oferecida como nicho, mas não há dados para classificar o
+mercado de Brasília como emergente ou em expansão.</li>
+</ul>
+<h3 id="53-análise-de-margem-2">5.3 Análise de margem</h3>
+<ul>
+<li>Forças: pouco investimento em ativos, possibilidade de contratos
+recorrentes e potencial de demonstrar economias concretas ao
+cliente.</li>
+<li>Margem bruta possível: [SEM DADO CONFIÁVEL]. Depende do esforço de
+consultoria, das visitas, da negociação com fornecedores e do nível de
+acompanhamento exigido.</li>
+<li>Ponto de equilíbrio: depende do número de contratos recorrentes e da
+contribuição de cada um para cobrir os custos fixos. [SEM DADO
+CONFIÁVEL].</li>
+<li>Retorno: não demonstrado; deve ser medido comparando o investimento
+com o caixa gerado pela prestação do serviço.</li>
+<li>Cadeia de valor: contratante → produtora → assessoria de compras →
+fornecedores de locação, impressão, cenografia e materiais → utilização,
+devolução e reutilização → relatório de compras e materiais
+evitados.</li>
+</ul>
+<h2 id="6-modelo-de-negócio-receita-custos-e-investimentos-1">6. Modelo
+de negócio: receita, custos e investimentos</h2>
+<p>[INFERÊNCIA] O modelo recomendado é uma assessoria cobrada por
+projeto ou contrato de acompanhamento, sem assumir inicialmente a
+propriedade dos materiais.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Componente</th>
+<th>Proposta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Quem paga</td>
+<td>Produtora, agência ou contratante com orçamento próprio de
+eventos.</td>
+</tr>
+<tr class="even">
+<td>Por que paga</td>
+<td>Para comparar alternativas, reduzir compras repetidas e organizar a
+reutilização de materiais.</td>
+</tr>
+<tr class="odd">
+<td>Receita</td>
+<td>Diagnóstico de materiais, planejamento de compras, coordenação de
+fornecedores e acompanhamento por evento.</td>
+</tr>
+<tr class="even">
+<td>Custos diretos</td>
+<td>Horas de consultoria, visitas, transporte, levantamento de
+inventário e ferramentas de comparação.</td>
+</tr>
+<tr class="odd">
+<td>Investimento inicial</td>
+<td>Computador, software básico, materiais de apresentação, prospecção e
+capital de giro.</td>
+</tr>
+<tr class="even">
+<td>Capital de implantação</td>
+<td>[INFERÊNCIA] pode ser compatível com o limite definido se não houver
+estoque próprio, frota ou espaço de armazenagem.</td>
+</tr>
+</tbody>
+</table>
+<p>Preço de venda: [SEM DADO CONFIÁVEL]. O preço deve ser validado por
+propostas comerciais e comparado com a economia líquida comprovável para
+o cliente.</p>
+<h2 id="7-enquadramento-nos-cinco-modelos-de-negócio-na-web-2">7.
+Enquadramento nos cinco modelos de negócio na web</h2>
+<p>Modelo empresarial (B2B): o principal produto é uma assessoria
+contratada por outras organizações.</p>
+<p>Não se enquadra prioritariamente em intermediação, mercado virtual,
+propaganda ou redes sociais. A empresa pode usar uma planilha ou
+plataforma simples para controlar o inventário, mas não precisa
+desenvolver um marketplace.</p>
+<h2 id="8-checklist-final-de-dornelas-2">8. Checklist final de
+Dornelas</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Pergunta de corte</th>
+<th>Resultado</th>
+<th>Justificativa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Existe um problema?</td>
+<td>Sim</td>
+<td>Compras repetidas e descarte de materiais são problemas operacionais
+identificáveis.</td>
+</tr>
+<tr class="even">
+<td>2. Existe um serviço que soluciona o problema?</td>
+<td>Sim</td>
+<td>Inventário, comparação de compras e coordenação de reutilização são
+entregáveis definidos.</td>
+</tr>
+<tr class="odd">
+<td>3. Os potenciais clientes são identificáveis?</td>
+<td>Sim</td>
+<td>Produtoras recorrentes e agências podem ser prospectadas
+diretamente.</td>
+</tr>
+<tr class="even">
+<td>4. Marketing e vendas são exequíveis?</td>
+<td>Sim, com condição</td>
+<td>A venda consultiva é compatível com uma equipe pequena, mas o custo
+de captação e a disposição a pagar precisam ser testados.</td>
+</tr>
+<tr class="odd">
+<td>5. A janela está aberta?</td>
+<td>Sim, com condição</td>
+<td>O serviço pode ser iniciado sem ativos pesados, mas a demanda
+comercial local ainda não foi comprovada.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-principal-risco-e-o-que-invalidaria-a-oportunidade-2">9.
+Principal risco e o que invalidaria a oportunidade</h2>
+<p>O risco central é o cliente já negociar diretamente com gráficas,
+montadoras e locadoras, sem reconhecer valor suficiente na
+assessoria.</p>
+<p>A oportunidade deve ser reavaliada se a economia líquida comprovada
+for inferior ao preço do serviço, se os clientes tiverem pouca
+recorrência ou se o trabalho de coordenação superar a receita que
+conseguem gerar.</p>
+<h2 id="10-tabela-de-evidências-2">10. Tabela de evidências</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Afirmação</th>
+<th>Número</th>
+<th>Fonte</th>
+<th>Ano</th>
+<th>O que o número mede</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>[FATO] A legislação federal estabelece prioridades de não geração,
+redução e reutilização de resíduos.</td>
+<td>[Não se aplica]</td>
+<td>Governo Federal, Lei nº 12.305/2010. Planalto</td>
+<td>2010</td>
+<td>Prioridades legais da gestão de resíduos, não economia média de
+materiais.</td>
+</tr>
+<tr class="even">
+<td>[FATO] O Sebrae mantém conteúdo institucional sobre compras
+sustentáveis.</td>
+<td>[Não se aplica]</td>
+<td>Sebrae, Centro Sebrae de Sustentabilidade. Centro Sebrae de
+Sustentabilidade (CSS)</td>
+<td>2025</td>
+<td>Existência de orientação institucional, não quantidade de
+compradores.</td>
+</tr>
+<tr class="odd">
+<td>[INFERÊNCIA] A assessoria pode operar sem comprar estoque
+próprio.</td>
+<td>[Não se aplica]</td>
+<td>Modelo operacional proposto</td>
+<td>2026</td>
+<td>Escolha estratégica de implantação.</td>
+</tr>
+<tr class="even">
+<td>Gasto anual com materiais de eventos por produtora no DF</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>Não localizada fonte pública adequada</td>
+<td>—</td>
+<td>Custo-base potencial para economia.</td>
+</tr>
+<tr class="odd">
+<td>Economia média obtida com reutilização de materiais</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>Não localizada fonte pública adequada</td>
+<td>—</td>
+<td>Benefício financeiro médio do serviço.</td>
+</tr>
+<tr class="even">
+<td>Margem bruta e número de competidores diretos</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>Não localizado levantamento adequado</td>
+<td>—</td>
+<td>Rentabilidade e estrutura concorrencial local.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="4-comparação-final-e-plano-de-validação">4. Comparação final e
+plano de validação</h1>
+<p>As três oportunidades passaram pelo checklist de Dornelas em caráter
+preliminar. Isso não significa que a viabilidade econômica tenha sido
+comprovada. As respostas condicionais exigem validação comercial antes
+de comprometer o capital.</p>
+<h2 id="comparação-para-decisão">Comparação para decisão</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Critério</th>
+<th>1. Gestão de resíduos</th>
+<th>2. Relatórios ambientais</th>
+<th>3. Compras sustentáveis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Problema identificável</td>
+<td>Forte base normativa para eventos abrangidos</td>
+<td>Necessidade potencial de comprovação</td>
+<td>Problema operacional plausível</td>
+</tr>
+<tr class="even">
+<td>Comprador</td>
+<td>Promotor ou produtora</td>
+<td>Agência, produtora ou contratante</td>
+<td>Produtora ou agência recorrente</td>
+</tr>
+<tr class="odd">
+<td>Capital físico necessário</td>
+<td>Baixo se houver terceirização</td>
+<td>Baixo</td>
+<td>Baixo sem estoque</td>
+</tr>
+<tr class="even">
+<td>Complexidade operacional</td>
+<td>Alta durante o evento</td>
+<td>Média, com foco documental</td>
+<td>Média, com coordenação de fornecedores</td>
+</tr>
+<tr class="odd">
+<td>Receita recorrente</td>
+<td>Por evento e contrato</td>
+<td>Por relatório e carteira de eventos</td>
+<td>Por projeto e acompanhamento</td>
+</tr>
+<tr class="even">
+<td>Evidência de disposição a pagar</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+</tr>
+<tr class="odd">
+<td>Posição recomendada</td>
+<td>Prioridade 1</td>
+<td>Prioridade 2</td>
+<td>Prioridade 3</td>
+</tr>
+</tbody>
+</table>
+<p>[INFERÊNCIA] A primeira oportunidade tem a melhor sustentação
+normativa. A segunda exige capacidade de documentação e validação de
+dados. A terceira depende mais de demonstrar economia financeira
+mensurável.</p>
+<h2 id="como-validar-antes-de-investir-os-r-50-mil">Como validar antes
+de investir os R$ 50 mil</h2>
+<p>Minha recomendação é não usar todo o capital na abertura. Primeiro,
+realizar uma validação comercial curta e com baixo custo, sem contratar
+equipe fixa nem comprar equipamentos pesados.</p>
+<ol type="1">
+<li>Entrevistar compradores reais. Conversar com produtores executivos,
+responsáveis por compras e gestores de marketing. Perguntar como
+resolvem o problema hoje, quem aprova a contratação, quanto pagaram no
+último projeto e quais evidências exigiram.</li>
+<li>Mapear contratos e concorrentes. Examinar editais, termos de
+referência e contratos públicos disponíveis, além de solicitar propostas
+a prestadores locais. Separar o que é obrigação legal do que é exigência
+específica de cada contratante.</li>
+<li>Vender um piloto remunerado. Apresentar um escopo limitado, com
+entregáveis claros e preço calculado a partir de custos cotados. Não
+contar uma manifestação de interesse como receita.</li>
+<li>Calcular a margem de contribuição. Registrar receita efetivamente
+contratada e recebida, mão de obra direta, fornecedores, transporte,
+tributos e retrabalho.</li>
+<li>Liberar investimento por etapas. Só adquirir ativos ou assumir
+despesas fixas após comprovar que compradores pagam e que a execução
+deixa contribuição positiva.</li>
+</ol>
+<p>As métricas para decidir devem ser receita recebida, margem de
+contribuição, custo de aquisição de clientes, prazo de recebimento,
+recorrência e ponto de equilíbrio — não audiência, seguidores ou número
+de participantes.</p>
+<h1 id="descartadas">DESCARTADAS</h1>
+<p>As oportunidades abaixo não entram na lista principal porque reprovam
+pelo menos um filtro de Dornelas. A rejeição significa que não há
+sustentação suficiente para recomendá-las agora, e não que sejam
+impossíveis em qualquer circunstância.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Nome</th>
+<th>Filtro em que foi reprovada</th>
+<th>Motivo em uma linha</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Produtora generalista de eventos sustentáveis</td>
+<td>Pergunta 4 — estratégia de marketing e vendas exequível</td>
+<td>Exige competir em produção, estrutura e atendimento amplo sem
+evidência de que o atributo sustentável permita conquistar contratos
+rentáveis com o capital disponível.</td>
+</tr>
+<tr class="even">
+<td>Plataforma digital de fornecedores sustentáveis para eventos</td>
+<td>Pergunta 4 — estratégia de marketing e vendas exequível</td>
+<td>Não há evidência de volume suficiente de compradores e fornecedores
+dispostos a pagar pela intermediação; desenvolver a plataforma antes de
+validar transações eleva o risco.</td>
+</tr>
+<tr class="odd">
+<td>Fabricação própria de copos, talheres e brindes ecológicos</td>
+<td>Pergunta 4 — estratégia de marketing e vendas exequível</td>
+<td>Produção, estoque, logística e concorrência por preço podem consumir
+o capital inicial; não foi comprovada uma vantagem de custo ou demanda
+contratada.</td>
+</tr>
+<tr class="even">
+<td>Certificação própria de eventos sustentáveis</td>
+<td>Pergunta 2 — produto ou serviço que solucione o problema</td>
+<td>Uma certificação própria sem reconhecimento, critérios verificáveis
+e confiança de compradores não garante valor de mercado. A alternativa
+prudente é começar com documentação e consultoria, sem alegar
+acreditação ou certificação reconhecida.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="conclusão">Conclusão</h2>
+<p>A decisão recomendada é começar pela gestão operacional de resíduos
+em eventos, desde que a validação demonstre compradores dispostos a
+contratar o serviço separadamente e parceiros confiáveis para a
+execução. Os relatórios ambientais podem ser uma segunda linha de
+receita, aproveitando os dados coletados na operação. A assessoria de
+compras sustentáveis pode ser adicionada quando houver clientes
+recorrentes.</p>
+<p>Essa combinação é compatível, em princípio, com uma equipe pequena e
+capital limitado. Entretanto, [SEM DADO CONFIÁVEL] para o tamanho
+monetário do nicho, preços médios, margens típicas e número de
+concorrentes impede afirmar que qualquer uma das três já seja um negócio
+financeiramente validado. A recomendação é avançar para entrevistas,
+cotações e pilotos pagos antes de realizar investimentos
+significativos.</p>
+</div></details>
+  <details><summary>Anexo 2 · IA-B: Gemini (resposta ao prompt-mestre)</summary><div class="annex"><hr />
+<h3 id="declaração-de-transparência-e-fontes-b4">Declaração de
+Transparência e Fontes (B4)</h3>
+<ul>
+<li><strong>Consulta à web:</strong> Não consultei a web para elaborar
+esta resposta (execução em modo offline/sem buscas externas
+adicionais).</li>
+<li><strong>Data de corte do conhecimento:</strong> A resposta utiliza
+conhecimento acumulado até a data atual de processamento (2026),
+respeitando estritamente o critério de <strong>[SEM DADO
+CONFIÁVEL]</strong> para lacunas estatísticas locais que demandem
+verificação oficial direta.</li>
+<li><strong>Metodologia de Evidência:</strong> Todas as afirmações do
+relatório estão categorizadas como <strong>[FATO]</strong> (embasadas em
+legislação, normas públicas ou estatísticas de órgãos oficiais) ou
+<strong>[INFERÊNCIA]</strong> (análise dedutiva de negócios a partir das
+premissas do recorte).</li>
+</ul>
+<hr />
+<h2 id="oportunidades-aprovadas">Oportunidades Aprovadas</h2>
+<hr />
+<h3
+id="oportunidade-1-consultoria-executiva-de-governança-e-transparência-esg-para-licitações-de-eventos-públicos-no-df">Oportunidade
+1: Consultoria Executiva de Governança e Transparência ESG para
+Licitações de Eventos Públicos no DF</h3>
+<h4 id="1-nome-da-oportunidade">1. Nome da Oportunidade</h4>
+<p>Gestão e Certificação de Conformidade Ambiental para Licitações
+Corporativas e Governamentais de Eventos em Brasília.</p>
+<h4 id="2-tendência-de-origem-com-fonte">2. Tendência de Origem [com
+fonte]</h4>
+<ul>
+<li><strong>Tendência:</strong> Inclusão obrigatória e crescente de
+critérios de sustentabilidade ambiental e ESG nos editais de licitação e
+compras públicas do Governo do Distrito Federal e União <strong>[FATO -
+Decreto Distrital nº 43.190/2022 (DF) e Lei Federal nº 14.133/2021 (Nova
+Lei de Licitações)]</strong>.</li>
+</ul>
+<h4 id="3-oportunidade-problema-específico--cliente-nomeável">3.
+Oportunidade: Problema Específico + Cliente Nomeável</h4>
+<ul>
+<li><strong>Problema Concreto:</strong> Agências de produção de eventos
+de médio porte em Brasília que disputam editais públicos e chamamentos
+institucionais perdem pontos decisivos ou são inabilitadas por não
+conseguirem comprovar tecnicamente a gestão de resíduos, neutralização
+de carbono e rastreabilidade da cadeia de suprimentos exigida nos
+editais de sustentabilidade <strong>[INFERÊNCIA]</strong>.</li>
+<li><strong>Cliente Nomeável:</strong> Agências brasileiras de
+comunicação e produção de eventos focadas em contas públicas no DF (ex.:
+agências contratadas via licitação por Ministérios, Sebrae Nacional e
+Secretarias do GDF) <strong>[INFERÊNCIA]</strong>.</li>
+</ul>
+<h4 id="4-cinco-perguntas-de-triagem-b5">4. Cinco Perguntas de Triagem
+(B5)</h4>
+<ol type="1">
+<li><strong>Quem exatamente tem esse problema?</strong> O Diretor de
+Operações e o Relações Públicas/Comercial de Agências de Eventos e
+Comunicação em Brasília que atendem ou licitam para o setor público
+(como Ministérios, Tribunais Superiores e Governo do DF).</li>
+<li><strong>Quanto dói?</strong> Risco direto de inabilitação ou perda
+de pontuação técnica em licitações cujos contratos variam de R$ 300 mil
+a mais de R$ 2 milhões. Perder um edital por falta de laudo ambiental
+custa centenas de milhares de reais em faturamento cessante.</li>
+<li><strong>Quem paga, e com que dinheiro?</strong> A própria Agência de
+Eventos contratada (ou licitante), utilizando a verba de custos
+diretos/operacionais da proposta técnica ou o orçamento prévio de
+desenvolvimento de negócios/licitações.</li>
+<li><strong>Por que este empreendedor, e não o incumbente?</strong> O
+empreendedor possui formação em Administração (capacidade de
+estruturação de processos e conformidade) e bagagem em marketing
+(capacidade de traduzir relatórios técnicos pesados em memoriais
+descritivos atraentes para comissões de licitação). Incumbentes
+tradicionais de eventos no DF vendem estrutura física e logística, não
+consultoria de conformidade técnica; consultorias ambientais
+tradicionais cobram preços proibitivos e não entendem a dinâmica de
+execução rápida e prazos de montagem do mercado de eventos.</li>
+<li><strong>Por que agora, e não em 2020 ou 2035?</strong>
+Regulamentação e fiscalização. A Lei nº 14.133/2021 passou a ter
+aplicação compulsória plena nos órgãos públicos, exigindo diretrizes de
+sustentabilidade que os órgãos do DF passaram a regulamentar e cobrar
+rigorosamente entre 2024 e 2026.</li>
+</ol>
+<h4 id="5-3ms">5. 3Ms</h4>
+<ul>
+<li><p><strong>5.1 Demanda de Mercado:</strong></p></li>
+<li><p><em>Audiência-alvo:</em> Cerca de 80 a 120 agências de médio
+porte que operam no ecossistema de eventos corporativos e governamentais
+do DF <strong>[INFERÊNCIA]</strong>.</p></li>
+<li><p><em>Durabilidade:</em> Altíssima; associada à legislação federal
+e distrital permanente.</p></li>
+<li><p><em>Acesso e Canais:</em> B2B direto, reuniões executivas,
+prospecção via monitoramento do Diário Oficial do DF (DODF) e do
+DOU.</p></li>
+<li><p><em>Custo de Captação:</em> CAC estimado em R$ 1.200 (prospecção
+ativa + reuniões); recuperado na primeira parcela do primeiro contrato
+(Ticket médio por projeto: R$ 8.000 a R$ 15.000).</p></li>
+<li><p><strong>5.2 Tamanho e Estrutura:</strong></p></li>
+<li><p><em>Mercado:</em> Emergente e regulado, altamente fragmentado no
+DF.</p></li>
+<li><p><em>Barreiras de Entrada e Saída:</em> Barreira de entrada
+baseada em conhecimento normativo e redes de contato B2B; baixo custo de
+saída.</p></li>
+<li><p><em>Competidores-Chave:</em> Poucos consultores autônomos de meio
+ambiente sem foco em eventos e grandes empresas de auditoria (PwC, EY)
+sem interesse em orçamentos operacionais de pequeno/médio
+porte.</p></li>
+<li><p><em>Ciclo de Vida:</em> Fase inicial de crescimento do mercado
+ESG público.</p></li>
+<li><p><strong>5.3 Análise de Margem:</strong></p></li>
+<li><p><em>Forças:</em> Operação <em>asset-light</em> (serviço
+intelectual), sem necessidade de estoques.</p></li>
+<li><p><em>Margem Bruta:</em> Estimada em 70% a 80%.</p></li>
+<li><p><em>Ponto de Equilíbrio e Retorno:</em> Retorno do investimento
+inicial (R$ 50.000) em 6 a 8 meses, com o ponto de equilíbrio atingido
+ao fechar 2 contratos por mês.</p></li>
+<li><p><em>Cadeia de Valor:</em> Cliente (Agência) <span
+class="math inline">→</span> Consultoria (Empreendedor) <span
+class="math inline">→</span> Entrega do Memorial/Gestão no Evento <span
+class="math inline">→</span> Órgão Público Contratante.</p></li>
+</ul>
+<h4 id="6-modelo-de-negócio">6. Modelo de Negócio</h4>
+<ul>
+<li><strong>Quem paga:</strong> A Agência de Produção de Eventos.</li>
+<li><strong>Por que paga:</strong> Para garantir habilitação técnica em
+editais e cumprir exigências contratuais sem ter que contratar um
+departamento fixo de ESG.</li>
+<li><strong>A que custo:</strong> Cobrança por projeto/evento (Ticket
+médio R$ 10.000) ou <em>retainer</em> mensal para agências com volume
+recorrente de licitações (R$ 5.000/mês). Custos operacionais do
+empreendedor: softwares de relatório, deslocamento em Brasília,
+remuneração própria e assessoria jurídica pontual.</li>
+</ul>
+<h4 id="7-enquadramento-nos-modelos-da-web">7. Enquadramento nos Modelos
+da Web</h4>
+<ul>
+<li><strong>Enquadramento:</strong> Modelo <strong>Empresarial</strong>
+(B2B de serviços profissionais integrados). Não é uma plataforma digital
+pura; utiliza ferramentas digitais para entrega de relatórios, mas a
+venda e o serviço são consultivos.</li>
+</ul>
+<h4 id="8-checklist-final-de-dornelas-b6">8. Checklist Final de Dornelas
+(B6)</h4>
+<ol type="1">
+<li><em>Existe um problema a ser resolvido?</em> <strong>SIM</strong>.
+Agências perdem licitações por falta de comprovação técnica de critérios
+ambientais.</li>
+<li><em>Existe um produto ou serviço que solucionará esse problema?</em>
+<strong>SIM</strong>. Pacote de memorial descritivo, plano de
+gerenciamento ambiental do evento e laudo pós-evento.</li>
+<li><em>É possível identificar com clareza os potenciais clientes?</em>
+<strong>SIM</strong>. Agências cadastradas no Sicaf que disputam editais
+de eventos em Brasília.</li>
+<li><em>Será possível implantar uma estratégia de marketing e vendas
+exequível, em custo e retorno?</em> <strong>SIM</strong>. Marketing de
+autoridade (LinkedIn/eventos do Sebrae) e vendas diretas B2B por
+prospecção ativa via Diário Oficial.</li>
+<li><em>A janela da oportunidade está aberta?</em> <strong>SIM</strong>.
+Regras de compras públicas sustentáveis estão em plena exigência no
+ciclo 2026–2030.</li>
+</ol>
+<h4 id="9-principal-risco-e-o-que-invalidaria-a-oportunidade">9.
+Principal Risco e o Que Invalidaria a Oportunidade</h4>
+<ul>
+<li><strong>Principal Risco:</strong> Mudança ou flexibilização da
+legislação ambiental nas compras públicas do GDF/União que elimine a
+pontuação técnica para critérios sustentáveis.</li>
+<li><strong>O que invalidaria:</strong> Se as agências de eventos
+optarem por internalizar especialistas em meio ambiente com salários de
+mercado mais baixos que a contratação de consultoria externa.</li>
+</ul>
+<h4 id="10-tabela-de-evidências">10. Tabela de Evidências</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Afirmação</th>
+<th>Número</th>
+<th>Fonte</th>
+<th>Ano</th>
+<th>O que o número mede</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exigência de critérios ambientais em contratações públicas</td>
+<td>N/A (Norma Legal)</td>
+<td>Decreto Distrital nº 43.190 / Lei 14.133
+<strong>[FATO]</strong></td>
+<td>2022 / 2021</td>
+<td>Critérios de sustentabilidade nas licitações do DF e União</td>
+</tr>
+<tr class="even">
+<td>Empresas de eventos operando no DF</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Não há dado compilado de agências ativas exclusivamente em
+licitações</td>
+</tr>
+<tr class="odd">
+<td>Investimento inicial do negócio</td>
+<td>Através do aporte de R$ 50.000 <strong>[INFERÊNCIA]</strong></td>
+<td>Definição do Escopo (B2)</td>
+<td>2026</td>
+<td>Capital próprio limite para abertura da microempresa</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3
+id="oportunidade-2-operação-de-gestão-lixo-zero-e-rastreabilidade-de-resíduos-para-eventos-corporativos-e-feiras-em-brasília">Oportunidade
+2: Operação de Gestão Lixo Zero e Rastreabilidade de Resíduos para
+Eventos Corporativos e Feiras em Brasília</h3>
+<h4 id="1-nome-da-oportunidade-1">1. Nome da Oportunidade</h4>
+<p>Central Unificada de Triagem, Compostagem e Valoração de Resíduos de
+Eventos (HUB Lixo Zero DF).</p>
+<h4 id="2-tendência-de-origem-com-fonte-1">2. Tendência de Origem [com
+fonte]</h4>
+<ul>
+<li><strong>Tendência:</strong> Pressão por logística reversa e
+erradicação do envio de resíduos recicláveis e orgânicos para aterros
+sanitários em grandes eventos <strong>[FATO - Política Nacional de
+Resíduos Sólidos - Lei Federal nº 12.305/2010 e Plano Distrital de
+Gestão Integrada de Resíduos Sólidos - PDGIRS/DF]</strong>.</li>
+</ul>
+<h4 id="3-oportunidade-problema-específico--cliente-nomeável-1">3.
+Oportunidade: Problema Específico + Cliente Nomeável</h4>
+<ul>
+<li><strong>Problema Concreto:</strong> Produtores de feiras de
+negócios, eventos corporativos e congressos médicos/científicos do DF
+contratam empresas de limpeza comuns que misturam lixo, gerando multas
+dos órgãos ambientais do DF (DF Legal/IBRAM) e impedindo que o evento
+obtenha certificados de sustentabilidade cobrados por patrocinadores de
+grande porte <strong>[INFERÊNCIA]</strong>.</li>
+<li><strong>Cliente Nomeável:</strong> Produtores executivos e
+organizadores de congressos e feiras no Centro de Convenções Ulysses
+Guimarães, Estádio Mané Garrincha e CICB
+<strong>[INFERÊNCIA]</strong>.</li>
+</ul>
+<h4 id="4-cinco-perguntas-de-triagem-b5-1">4. Cinco Perguntas de Triagem
+(B5)</h4>
+<ol type="1">
+<li><strong>Quem exatamente tem esse problema?</strong> O Diretor de
+Operações e o Produtor Geral de Feiras de Negócios e Congressos em
+Brasília.</li>
+<li><strong>Quanto dói?</strong> Risco de autuação e embargo por
+descarte inadequado, além do dano à imagem de patrocinadores master
+(ex.: bancos, grandes multinacionais) que condicionam o aporte
+financeiro à obtenção de relatórios de impacto de resíduos.</li>
+<li><strong>Quem paga, e com que dinheiro?</strong> A produtora
+executiva do evento, utilizando a verba reservada no orçamento para
+"Limpeza, Logística e Gestão de Resíduos".</li>
+<li><strong>Por que este empreendedor, e não o incumbente?</strong> As
+empresas tradicionais de limpeza do DF vendem apenas "mão de obra com
+vassoura e saco de lixo". O empreendedor, aplicando visão administrativa
+e marketing, vende um <em>serviço completo com certificação, painel de
+dados ambientais pós-evento e ativação de marketing verde</em> para os
+patrocinadores do cliente.</li>
+<li><strong>Por que agora, e não em 2020 ou 2035?</strong> A
+fiscalização sobre a destinação correta de resíduos orgânicos e
+recicláveis em grandes geradores no DF ficou mais rigorosa com a
+consolidação dos Termos de Compromisso de Logística Reversa no DF.</li>
+</ol>
+<h4 id="5-3ms-1">5. 3Ms</h4>
+<ul>
+<li><p><strong>5.1 Demanda de Mercado:</strong></p></li>
+<li><p><em>Audiência-alvo:</em> Organizadores de aproximadamente 150 a
+200 eventos de médio/grande porte por ano nos grandes espaços de eventos
+do DF <strong>[INFERÊNCIA]</strong>.</p></li>
+<li><p><em>Durabilidade:</em> Recorrente; eventos acontecem durante todo
+o ano (pico entre março e novembro).</p></li>
+<li><p><em>Acesso e Canais:</em> Venda direta B2B aos produtores de
+eventos e parcerias estratégicas com gestores dos espaços (Ulysses,
+CICB, etc.).</p></li>
+<li><p><em>Custo de Captação:</em> Recuperado na contratação de um único
+evento (CAC ~R$ 800 para ticket médio de R$ 6.000 a R$ 12.000 por evento
+de 3 dias).</p></li>
+<li><p><strong>5.2 Tamanho e Estrutura:</strong></p></li>
+<li><p><em>Mercado:</em> Fragmentado nas pontas (cooperativas de
+catadores de um lado, empresas de limpeza pesada do outro) sem um
+integrador profissional.</p></li>
+<li><p><em>Barreiras de Entrada e Saída:</em> Média barreira de entrada
+(exige parcerias formalizadas com cooperativas locais cadastradas no GDF
+e pátios de compostagem); baixo custo de saída.</p></li>
+<li><p><em>Competidores-Chave:</em> Empresas de limpeza
+urbana/terceirização geral sem expertise ambiental e poucas
+<em>startups</em> puramente de compostagem sem capacidade
+corporativa.</p></li>
+<li><p><em>Ciclo de Vida:</em> Em fase de forte expansão no DF.</p></li>
+<li><p><strong>5.3 Análise de Margem:</strong></p></li>
+<li><p><em>Forças:</em> Modelo escalável por contratação de cooperativas
+parceiras e diaristas especializadas sob demanda.</p></li>
+<li><p><em>Margem Bruta:</em> Estimada em 40% a 50%.</p></li>
+<li><p><em>Ponto de Equilíbrio e Retorno:</em> Retorno dos R$ 50.000 em
+10 meses. Ponto de equilíbrio atingido com 2 a 3 eventos atendididos por
+mês.</p></li>
+<li><p><em>Cadeia de Valor:</em> Produção do Evento <span
+class="math inline">→</span> Serviço de Logística Reversa/Triagem no
+Local <span class="math inline">→</span> Cooperativa
+parceira/Compostagem <span class="math inline">→</span> Emissão de
+Relatório de Destinação.</p></li>
+</ul>
+<h4 id="6-modelo-de-negócio-1">6. Modelo de Negócio</h4>
+<ul>
+<li><strong>Quem paga:</strong> A produtora ou organizadora do
+evento.</li>
+<li><strong>Por que paga:</strong> Para resolver a limpeza do evento sob
+o selo "Lixo Zero", entregar dados comprováveis aos patrocinadores e
+evitar multas ambientais.</li>
+<li><strong>A que custo:</strong> Valor fixo por dia de evento (ex.: R$
+2.500 a R$ 4.000/dia a depender do público estimado e metragem). Custos:
+contratação de catadores/triadores qualificados, sacos biodegradáveis,
+bombonas de compostagem, frete e auditoria.</li>
+</ul>
+<h4 id="7-enquadramento-nos-modelos-da-web-1">7. Enquadramento nos
+Modelos da Web</h4>
+<ul>
+<li><strong>Enquadramento:</strong> Não se enquadra nos modelos de
+negócios digitais nativos da web. Trata-se de uma <strong>Prestação de
+Serviços Operacionais Especializados B2B</strong> (economia circular
+física), utilizando a web apenas para divulgação, relatório e captação
+de clientes.</li>
+</ul>
+<h4 id="8-checklist-final-de-dornelas-b6-1">8. Checklist Final de
+Dornelas (B6)</h4>
+<ol type="1">
+<li><em>Existe um problema a ser resolvido?</em> <strong>SIM</strong>.
+Eventos geram toneladas de lixo misturado e correm risco de sanções e
+perda de patrocinadores.</li>
+<li><em>Existe um produto ou serviço que solucionará esse problema?</em>
+<strong>SIM</strong>. Operação de triagem em tempo real + destinação
+certificada + relatório ambiental.</li>
+<li><em>É possível identificar com clareza os potenciais clientes?</em>
+<strong>SIM</strong>. Produtores de feiras e congressos em
+Brasília.</li>
+<li><em>Será possível implantar uma estratégia de marketing e vendas
+exequível, em custo e retorno?</em> <strong>SIM</strong>. Prospecção
+direta junto às produtoras e relacionamento com gestores de venues.</li>
+<li><em>A janela da oportunidade está aberta?</em> <strong>SIM</strong>.
+Exigências crescentes de sustentabilidade corporativa em 2026.</li>
+</ol>
+<h4 id="9-principal-risco-e-o-que-invalidaria-a-oportunidade-1">9.
+Principal Risco e o Que Invalidaria a Oportunidade</h4>
+<ul>
+<li><strong>Principal Risco:</strong> Falha na cadeia de destinação
+final (ex.: cooperativa parceira rejeitar o lote ou destinar
+incorretamente), destruindo a credibilidade da certificação do
+evento.</li>
+<li><strong>O que invalidaria:</strong> Adoção generalizada de materiais
+100% reutilizáveis que eliminem a geração de resíduos
+recicláveis/orgânicos nos eventos em Brasília (cenário improvável no
+curto prazo).</li>
+</ul>
+<h4 id="10-tabela-de-evidências-1">10. Tabela de Evidências</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Afirmação</th>
+<th>Número</th>
+<th>Fonte</th>
+<th>Ano</th>
+<th>O que o número mede</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Obrigatoriedade da destinação adequada de resíduos sólidos</td>
+<td>N/A (Norma Legal)</td>
+<td>Lei Federal nº 12.305 <strong>[FATO]</strong></td>
+<td>2010</td>
+<td>Diretrizes da Política Nacional de Resíduos Sólidos</td>
+</tr>
+<tr class="even">
+<td>Volume de resíduos gerados em eventos no DF</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Ausência de dado oficial do SLU/DF separado exclusivamente para o
+setor de eventos</td>
+</tr>
+<tr class="odd">
+<td>Capital inicial de operação</td>
+<td>R$ 50.000 <strong>[INFERÊNCIA]</strong></td>
+<td>Limite do Projeto (B2)</td>
+<td>2026</td>
+<td>Aporte do microempreendedor em equipamentos e sinalização</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3
+id="oportunidade-3-agência-de-cenografia-sustentável-e-aluguel-de-modulares-ecológicos-para-eventos-corporativos-e-sociais">Oportunidade
+3: Agência de Cenografia Sustentável e Aluguel de Modulares Ecológicos
+para Eventos Corporativos e Sociais</h3>
+<h4 id="1-nome-da-oportunidade-2">1. Nome da Oportunidade</h4>
+<p>Cenografia Eco-eficiente e Módulos Reutilizáveis para Eventos em
+Brasília.</p>
+<h4 id="2-tendência-de-origem-com-fonte-2">2. Tendência de Origem [com
+fonte]</h4>
+<ul>
+<li><strong>Tendência:</strong> Descarte em massa de cenografia de
+madeira/MDF e lona plástica pós-evento sendo renegado por marcas
+alinhadas a compromissos ambientais <strong>[FATO - ABNT NBR ISO
+20121:2012 - Sistemas de gestão sustentável de eventos]</strong>.</li>
+</ul>
+<h4 id="3-oportunidade-problema-específico--cliente-nomeável-2">3.
+Oportunidade: Problema Específico + Cliente Nomeável</h4>
+<ul>
+<li><strong>Problema Concreto:</strong> Gerentes de Marketing e
+Endomarketing de empresas privadas de médio e grande porte em Brasília
+(bancos, cooperativas de crédito, construtoras, empresas de tecnologia)
+precisam realizar eventos corporativos e estandes mantendo o padrão
+visual premium, mas são cobrados pela diretoria para zerar a pegada de
+lixo cenográfico desnecessário pós-evento
+<strong>[INFERÊNCIA]</strong>.</li>
+<li><strong>Cliente Nomeável:</strong> Gerentes de Marketing e Gestores
+de Eventos de grandes empresas sediadas em Brasília (ex.: SICC, PO
+Poupex, Cooperativas Sicoob/Sicredi no DF, Votorantim Cimentos)
+<strong>[INFERÊNCIA]</strong>.</li>
+</ul>
+<h4 id="4-cinco-perguntas-de-triagem-b5-2">4. Cinco Perguntas de Triagem
+(B5)</h4>
+<ol type="1">
+<li><strong>Quem exatamente tem esse problema?</strong> O Gerente de
+Marketing e Comunicação de empresas de grande porte sediadas no DF que
+organizam suas convenções ou participam de feiras.</li>
+<li><strong>Quanto dói?</strong> Custo financeiro elevado da cenografia
+tradicional que vira lixo em 48 horas (orçamentos de R$ 20 mil a R$ 80
+mil jogados fora), somado ao constrangimento reputacional de ver a marca
+associada a caçambas cheias de resíduos.</li>
+<li><strong>Quem paga, e com que dinheiro?</strong> A empresa
+contratante, com a verba do departamento de Marketing / Comunicação
+Interna / Eventos.</li>
+<li><strong>Por que este empreendedor, e não o incumbente?</strong>
+Montadoras tradicionais do DF possuem acervo depreciado de MDF e
+estruturas metálicas antigas e faturam alto cobrando pela
+"destruição/descarte" ou reconstrução do zero. O empreendedor entra com
+o modelo de ecodesign (módulos de madeira de reflorestamento, estruturas
+modulares leves e reutilizáveis, impressão ecológica em tecido
+reciclado) focado em eficiência e posicionamento de marca.</li>
+<li><strong>Por que agora, e não em 2020 ou 2035?</strong> A maturidade
+das metas corporativas de sustentabilidade em 2026 faz com que
+relatórios de ESG corporativos exijam a auditoria dos fornecedores de
+eventos.</li>
+</ol>
+<h4 id="5-3ms-2">5. 3Ms</h4>
+<ul>
+<li><p><strong>5.1 Demanda de Mercado:</strong></p></li>
+<li><p><em>Audiência-alvo:</em> Centenas de empresas de médio e grande
+porte no DF que realizam convenções, lançamentos de produtos e
+estandes.</p></li>
+<li><p><em>Durabilidade:</em> Alta e constante durante todo o ano
+comercial.</p></li>
+<li><p><em>Acesso e Canais:</em> Portfólio visual no LinkedIn,
+prospecção via SDR/Inbound direcionado a gestores de marketing no
+DF.</p></li>
+<li><p><em>Custo de Captação:</em> CAC recuperável já no primeiro
+projeto de locação/cenografia (Ticket médio: R$ 15.000 a R$
+35.000).</p></li>
+<li><p><strong>5.2 Tamanho e Estrutura:</strong></p></li>
+<li><p><em>Mercado:</em> Setor de montagem de estandes tradicionalmente
+maduro, porém o nicho de <em>cenografia sustentável modular</em> é
+incipiente e emergente no DF.</p></li>
+<li><p><em>Barreiras de Entrada e Saída:</em> Investimento inicial em
+acervo modular versátil.</p></li>
+<li><p><em>Competidores-Chave:</em> Montadoras tradicionais de estandes
+do DF (focadas em estruturas pesadas convencionais).</p></li>
+<li><p><em>Ciclo de Vida:</em> Fase de introdução/crescimento
+rápido.</p></li>
+<li><p><strong>5.3 Análise de Margem:</strong></p></li>
+<li><p><em>Forças:</em> A reutilização dos módulos eleva a margem a cada
+locação efetuada.</p></li>
+<li><p><em>Margem Bruta:</em> Estimada em 55% a 65% após o amortecimento
+do custo do acervo.</p></li>
+<li><p><em>Ponto de Equilíbrio e Retorno:</em> Retorno do investimento
+(R$ 50.000 aplicados no acervo inicial modular e prototipagem) em 8 a 12
+meses.</p></li>
+<li><p><em>Cadeia de Valor:</em> Aquisição de Módulos Eco <span
+class="math inline">→</span> Projeto 3D do Espaço <span
+class="math inline">→</span> Montagem/Desmontagem <span
+class="math inline">→</span> Reutilização.</p></li>
+</ul>
+<h4 id="6-modelo-de-negócio-2">6. Modelo de Negócio</h4>
+<ul>
+<li><strong>Quem paga:</strong> O departamento de Marketing da empresa
+contratante.</li>
+<li><strong>Por que paga:</strong> Por uma solução cenográfica de alto
+padrão visual que reduz o custo comparado à cenografia construída do
+zero e elimina o descarte de resíduos.</li>
+<li><strong>A que custo:</strong> Locação dos módulos + taxa de projeto
+e montagem/transporte. Custos principais: frete local no DF, equipe de
+montagem pontual e manutenção do acervo.</li>
+</ul>
+<h4 id="7-enquadramento-nos-modelos-da-web-2">7. Enquadramento nos
+Modelos da Web</h4>
+<ul>
+<li><strong>Enquadramento:</strong> Não se enquadra nos modelos digitais
+puros. Trata-se de uma <strong>Empresa de Locação e Serviços de
+Engenharia/Design Cenográfico (B2B)</strong>, que utiliza plataformas
+digitais como canal de catálogo e portfólio.</li>
+</ul>
+<h4 id="8-checklist-final-de-dornelas-b6-2">8. Checklist Final de
+Dornelas (B6)</h4>
+<ol type="1">
+<li><em>Existe um problema a ser resolvido?</em> <strong>SIM</strong>.
+Alto custo e descarte poluente da cenografia convencional em eventos
+corporativos.</li>
+<li><em>Existe um produto ou serviço que solucionará esse problema?</em>
+<strong>SIM</strong>. Locação de cenografia modular sustentável e
+reutilizável.</li>
+<li><em>É possível identificar com clareza os potenciais clientes?</em>
+<strong>SIM</strong>. Gerentes de marketing e eventos de empresas no
+DF.</li>
+<li><em>Será possível implantar uma estratégia de marketing e vendas
+exequível, em custo e retorno?</em> <strong>SIM</strong>. Venda direta
+B2B e portfólio digital focado em executivos.</li>
+<li><em>A janela da oportunidade está aberta?</em> <strong>SIM</strong>.
+Forte cobrança interna em grandes empresas por práticas sustentáveis na
+cadeia de suprimentos em 2026.</li>
+</ol>
+<h4 id="9-principal-risco-e-o-que-invalidaria-a-oportunidade-2">9.
+Principal Risco e o Que Invalidaria a Oportunidade</h4>
+<ul>
+<li><strong>Principal Risco:</strong> Danos severos ao acervo modular
+durante o transporte e montagem/desmontagem sem tempo hábil de reposição
+entre eventos.</li>
+<li><strong>O que invalidaria:</strong> Queda drástica nos custos da
+cenografia tradicional em MDF a ponto de tornar o investimento em peças
+modulares ecologicamente não competitivo financeiramente.</li>
+</ul>
+<h4 id="10-tabela-de-evidências-2">10. Tabela de Evidências</h4>
+<table>
+<thead>
+<tr class="header">
+<th>Afirmação</th>
+<th>Número</th>
+<th>Fonte</th>
+<th>Ano</th>
+<th>O que o número mede</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Normalização de gestão sustentável em eventos</td>
+<td>N/A (Norma Técnica)</td>
+<td>ABNT NBR ISO 20121 <strong>[FATO]</strong></td>
+<td>2012</td>
+<td>Requisitos para sustentabilidade no sistema de gestão de
+eventos</td>
+</tr>
+<tr class="even">
+<td>Quantidade de MDF/Lona descartados em eventos no DF</td>
+<td>[SEM DADO CONFIÁVEL]</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Não existem registros públicos consolidados sobre descarte
+cenográfico específico no DF</td>
+</tr>
+<tr class="odd">
+<td>Custo de aquisição do lote inicial modular</td>
+<td>R$ 50.000 <strong>[INFERÊNCIA]</strong></td>
+<td>Limite do Projeto (B2)</td>
+<td>2026</td>
+<td>Alocação do capital inicial para montagem de protótipos e acervo
+inicial</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="seção-de-oportunidades-descartadas">Seção de Oportunidades
+Descartadas</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Nome da Ideia / Oportunidade</th>
+<th>Filtro em que foi Reprovada</th>
+<th>Motivo em uma linha</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1. Plataforma SaaS de Cálculo de Pegada de Carbono de
+Eventos Sociais (Casamentos/Aniversários)</strong></td>
+<td>Dornelas - Pergunta 3 (<em>Identificação clara dos potenciais
+clientes</em>) &amp; Triagem B5 - Pergunta 3 (<em>Quem paga</em>)</td>
+<td>O cliente final de eventos sociais (noivos/aniversariantes) não está
+disposto a pagar por compensação/software e o mercado B2C no DF é
+extremamente difuso.</td>
+</tr>
+<tr class="even">
+<td><strong>2. Produtora de Grandes Festivais Culturais 100% Neutros em
+Carbono e Veganos</strong></td>
+<td>Limite de Capital Inicial (B2 - R$ 50.000) &amp; Dornelas - Pergunta
+4 (<em>Estratégia exequível em custo e retorno</em>)</td>
+<td>O capital inicial de R$ 50.000 é insuficiente para cobrir o risco de
+caixa, cachês de atrações e infraestrutura de um grande festival no
+DF.</td>
+</tr>
+<tr class="odd">
+<td><strong>3. Fornecimento e Fabricação de Copos e Talheres
+Biodegradáveis em Larga Escala</strong></td>
+<td>Dornelas - Pergunta 4 (<em>Marketing e Vendas/Viabilidade</em>)
+&amp; Escopo de Entrada</td>
+<td>Exige alto investimento em maquinário de produção industrial
+(CAPEX), inviável com R$ 50.000 para competiçao de preço contra
+distribuidores já estabelecidos.</td>
+</tr>
+<tr class="even">
+<td><strong>4. Aplicativo de Marketplace para Conectar Promotores a
+Fornecedores Verdes no DF</strong></td>
+<td>Enquadramento Web / Triagem B5 - Pergunta 4 (<em>Por que este
+empreendedor</em>)</td>
+<td>Problema do "ovo e da galinha" (atrair compradores sem ter
+vendedores suficientes e vice-versa); requer alto investimento em
+tráfego e dev, superando R$ 50.000.</td>
+</tr>
+</tbody>
+</table>
+</div></details>
+  <details><summary>Anexo 3 · IA-C: DeepSeek (resposta ao prompt-mestre)</summary><div class="annex"><h1
+id="oportunidades-de-negócio-no-mercado-de-eventos-sustentáveis-em-brasília-20262030">Oportunidades
+de Negócio no Mercado de Eventos Sustentáveis em Brasília
+(2026–2030)</h1>
+<h2 id="conclusão-antecipada">Conclusão Antecipada</h2>
+<p>Após aplicar os filtros de demanda institucional, existência de
+provedor local e viabilidade comercial, identifico <strong>3
+oportunidades qualificadas</strong> que sobrevivem ao escrutínio. A mais
+robusta delas é a <strong>Infraestrutura Física de Sustentabilidade para
+Eventos</strong> (central de triagem, utensílios retornáveis, sistemas
+de lavagem), ancorada por uma demanda regulatória crescente e pela
+ausência de prestadores estruturados no Distrito Federal. As demais —
+<strong>Plano de Gerenciamento de Resíduos como Serviço</strong> e
+<strong>Neutralização de Carbono como Produto Local</strong> — são
+oportunidades reais, mas com menor profundidade de mercado no curto
+prazo.</p>
+<h2
+id="oportunidade-1-infraestrutura-física-de-sustentabilidade-para-eventos">Oportunidade
+1: Infraestrutura Física de Sustentabilidade para Eventos</h2>
+<h3 id="descrição-e-mecanismo">Descrição e Mecanismo</h3>
+<p>Fornecimento de infraestrutura modular e serviços operacionais que
+permitem a eventos em Brasília executarem práticas de sustentabilidade
+sem depender de improvisação. O produto/serviço inclui:</p>
+<ul>
+<li><strong>Central de triagem de resíduos</strong> contratada como
+serviço (equipe + equipamento) durante o evento</li>
+<li><strong>Locação de utensílios retornáveis</strong> (pratos, copos,
+talheres) com logística de higienização integrada</li>
+<li><strong>Sistema de lavagem móvel</strong> para eventos de médio e
+grande porte</li>
+<li><strong>Mobiliário e sinalização produzidos com materiais
+reciclados</strong> (paletes, OSB, PET reciclado)</li>
+</ul>
+<p>A referência operacional existe: o Mercado Mané, gerenciado pela R2
+Produções em Brasília, opera com lixo zero (mais de 90% dos resíduos
+desviados de aterro), utilizando utensílios retornáveis, central de
+lavagem e triagem remunerada da Cooperativa Acobraz . O modelo é
+validado localmente.</p>
+<h3 id="racional-de-mercado">Racional de Mercado</h3>
+<p><strong>Evidência de demanda:</strong></p>
+<ul>
+<li>Existem <strong>2.450 empresas de eventos ativas no DF</strong> com
+faturamento até R$ 300 milhões . Destas, <strong>478 são especificamente
+de serviços de eventos</strong> . O volume de eventos corporativos,
+governamentais e institucionais em Brasília gera uma demanda contínua
+por soluções operacionais.</li>
+<li><strong>Pressão regulatória iminente:</strong> O PL 5098/2025
+(apensado ao PL 5824/2023) altera a Política Nacional de Resíduos
+Sólidos para exigir que organizadores de eventos elaborem plano de
+gerenciamento de resíduos e priorizem cooperativas de catadores . Quando
+aprovada, a lei entra em vigor em 180 dias — criando uma janela de
+demanda urgente por fornecedores especializados.</li>
+<li><strong>Legislação estadual análoga já vigora em Goiás</strong> (Lei
+23.657/2025), exigindo PGRS para eventos com 2.000+ pessoas e
+contratação obrigatória de cooperativas em eventos públicos . O DF é um
+mercado naturalmente impactado por esse precedente.</li>
+</ul>
+<p><strong>Evidência de oferta insuficiente:</strong> Não há registro de
+empresas no DF que ofereçam especificamente infraestrutura de
+sustentabilidade como serviço padronizado para eventos. A R2 Produções
+opera o Mercado Mané, mas é uma produtora com ativo próprio, não uma
+fornecedora de infraestrutura para terceiros. O mercado é fragmentado
+entre locadores de utensílios convencionais (sem foco em
+sustentabilidade), empresas de limpeza (sem expertise em triagem para
+eventos) e cooperativas (sem capacidade de atendimento comercial
+estruturado).</p>
+<h3 id="modelo-de-negócio">Modelo de Negócio</h3>
+<p>Venda direta B2B para produtoras de eventos, agências e órgãos
+públicos que contratam eventos diretamente. Receita por contrato de
+evento (locação + serviço operacional). A contratação recorrente depende
+da construção de relacionamento com as 2.450 empresas do setor no
+DF.</p>
+<p><strong>Cliente-alvo primário:</strong> Produtoras de eventos
+corporativos e institucionais de médio e grande porte que já enfrentam
+pressão de clientes (empresas, órgãos públicos) para demonstrar
+sustentabilidade, mas não têm fornecedor qualificado.</p>
+<h3 id="por-que-sobrevive-aos-filtros">Por que sobrevive aos
+filtros</h3>
+<ul>
+<li><strong>Não é ideia abstrata:</strong> Existe modelo operacional
+funcionando em Brasília (Mercado Mané) .</li>
+<li><strong>Demanda não depende de convencimento:</strong> Regulação
+federal iminente e pressão de contratantes institucionais (governo,
+grandes empresas) criam obrigação.</li>
+<li><strong>Barreira de entrada:</strong> Requer investimento em ativos
+(central de lavagem, utensílios), logística e equipe treinada — não é
+replicável por qualquer produtora amadora.</li>
+<li><strong>Mercado local mensurável:</strong> 2.450 empresas no DF,
+sendo 478 de serviços de eventos .</li>
+</ul>
+<h2
+id="oportunidade-2-plano-de-gerenciamento-de-resíduos-pgrs-como-serviço">Oportunidade
+2: Plano de Gerenciamento de Resíduos (PGRS) como Serviço</h2>
+<h3 id="descrição-e-mecanismo-1">Descrição e Mecanismo</h3>
+<p>Serviço especializado de elaboração e execução de Planos de
+Gerenciamento de Resíduos Sólidos para eventos, atendendo à exigência
+regulatória federal (PL 5098/2025) e às expectativas de contratantes
+institucionais. O serviço inclui:</p>
+<ul>
+<li><strong>Elaboração do PGRS</strong> conforme metodologia aceita por
+órgãos ambientais</li>
+<li><strong>Dimensionamento de infraestrutura</strong> necessária
+(coletores, equipe, logística)</li>
+<li><strong>Conexão com cooperativas</strong> de catadores locais para
+destinação final</li>
+<li><strong>Documentação e relatórios de conformidade</strong> para
+apresentação ao órgão licenciador</li>
+</ul>
+<p>O serviço é vendido a produtoras que precisam cumprir a exigência sem
+manter expertise interna, ou diretamente a órgãos públicos que organizam
+eventos.</p>
+<h3 id="racional-de-mercado-1">Racional de Mercado</h3>
+<p><strong>Evidência de demanda:</strong> A proposição legislativa está
+em tramitação ativa na Câmara (PL 5098/2025, apensado ao PL 5824/2023,
+publicado em avulso em fevereiro de 2026) . O texto estabelece que os
+responsáveis pela organização de eventos devem elaborar plano de
+gerenciamento na forma exigida pelo licenciamento ambiental ou
+procedimento autorizativo conduzido pelo Município ou pelo Distrito
+Federal . Eventos em Brasília que dependem de autorização pública (a
+maioria dos eventos em espaços públicos ou que envolvem órgãos
+governamentais) serão diretamente afetados.</p>
+<p><strong>Evidência de oferta insuficiente:</strong> O PGRS para
+eventos exige conhecimento específico de legislação ambiental,
+metodologia de quantificação de resíduos e rede de relacionamento com
+cooperativas. Consultorias ambientais generalistas não têm foco em
+eventos; produtoras de eventos não têm expertise ambiental. Há um espaço
+de intermediação não ocupado.</p>
+<h3 id="modelo-de-negócio-1">Modelo de Negócio</h3>
+<p>Serviço de consultoria com preço por projeto (elaboração do PGRS) +
+eventual contratação para execução (monitoramento durante o evento).
+Receita recorrente limitada, mas a aprovação da lei pode criar um pico
+de demanda por conformidade.</p>
+<p><strong>Cliente-alvo primário:</strong> Produtoras de eventos
+institucionais e governamentais em Brasília que realizam eventos de
+médio e grande porte e precisam de conformidade documental.</p>
+<h3 id="por-que-sobrevive-aos-filtros-1">Por que sobrevive aos
+filtros</h3>
+<ul>
+<li><strong>Gatilho regulatório claro:</strong> A lei federal, quando
+aprovada, cria obrigação legal. O prazo de 180 dias para entrada em
+vigor força a busca por fornecedores.</li>
+<li><strong>Demanda institucional em Brasília:</strong> O volume de
+eventos governamentais e institucionais na capital é estruturalmente
+alto, e esses contratantes tendem a exigir conformidade acima da
+média.</li>
+<li><strong>Localização estratégica:</strong> Brasília concentra órgãos
+ambientais federais e o mercado de eventos institucionais que mais
+rapidamente absorverá a exigência.</li>
+<li><strong>Risco:</strong> A aprovação da lei ainda está em tramitação,
+e o timing exato é incerto. Este serviço depende de um evento
+legislativo futuro.</li>
+</ul>
+<h2
+id="oportunidade-3-neutralização-de-carbono-como-produto-local-para-eventos-de-brasília">Oportunidade
+3: Neutralização de Carbono como Produto Local para Eventos de
+Brasília</h2>
+<h3 id="descrição-e-mecanismo-2">Descrição e Mecanismo</h3>
+<p>Oferecer aos organizadores de eventos em Brasília um pacote de
+mensuração e neutralização de emissões de GEE, com duas características
+diferenciadoras em relação ao mercado nacional:</p>
+<ul>
+<li><strong>Mensuração adaptada à realidade local:</strong> Cálculo de
+pegada considerando transporte aéreo para Brasília (que tende a ser a
+maior fonte de emissão em eventos nacionais na capital), energia da rede
+local e resíduos gerados.</li>
+<li><strong>Neutralização ancorada em projetos do Cerrado:</strong> Em
+vez de créditos genéricos da Amazônia (como usado no Sesc Minas Gerais
+), oferecer créditos de projetos de preservação ou recuperação do
+Cerrado — bioma nativo do DF e com apelo de marketing superior para
+contratantes locais.</li>
+</ul>
+<p>O Expointer 2026 já adota modelo similar no RS, com QR codes para
+visitantes calcularem e neutralizarem sua própria pegada . A CRVR atua
+como patrocinadora ambiental disponibilizando créditos. O modelo é
+replicável.</p>
+<h3 id="racional-de-mercado-2">Racional de Mercado</h3>
+<p><strong>Evidência de demanda:</strong></p>
+<ul>
+<li>Empresas e órgãos públicos estão crescentemente exigindo
+demonstração de neutralização de carbono como parte da prestação de
+contas de eventos institucionais. O certificado do Sesc Minas Gerais
+(neutralização de 11.000 kg de CO₂ via Eccaplan) exemplifica o tipo de
+documento que contratantes esperam .</li>
+<li>A II CIRSOL em Brasília (conferência internacional de resíduos
+sólidos) demonstra que Brasília tem eventos de grande porte com foco em
+sustentabilidade e público qualificado .</li>
+</ul>
+<p><strong>Evidência de oferta insuficiente:</strong> Os provedores de
+neutralização de carbono para eventos no Brasil tendem a ser empresas de
+São Paulo ou do Sul. Não há provedor brasiliense com foco específico em
+eventos locais e ancoragem no Cerrado. A Eccaplan, que emitiu o
+certificado do Sesc MG, é um exemplo de player nacional, mas não tem
+representação local identificada.</p>
+<h3 id="modelo-de-negócio-2">Modelo de Negócio</h3>
+<p>Serviço de consultoria e certificação: mensuração de emissões
+(metodologia GHG Protocol), aquisição de créditos de carbono de projetos
+do Cerrado, emissão de certificado. Receita por evento neutralizado.
+Possibilidade de parceria com organizações locais de conservação do
+Cerrado para originação de créditos.</p>
+<p><strong>Cliente-alvo primário:</strong> Órgãos governamentais,
+empresas de grande porte e instituições que realizam eventos em Brasília
+e precisam reportar neutralização.</p>
+<h3 id="por-que-sobrevive-aos-filtros-2">Por que sobrevive aos
+filtros</h3>
+<ul>
+<li><strong>Demanda institucional existente:</strong> Contratantes já
+compram neutralização de fornecedores de fora; a oportunidade é capturar
+esse valor localmente.</li>
+<li><strong>Diferenciação real:</strong> Créditos do Cerrado +
+conhecimento do perfil de emissões de eventos em Brasília cria vantagem
+sobre provedores genéricos.</li>
+<li><strong>Evidência de replicabilidade:</strong> Modelo Expointer
+(evento carbono neutro com patrocinador ambiental) e Sesc MG
+(neutralização certificada) provam que a demanda é real e o produto é
+viável .</li>
+<li><strong>Mercado pequeno, mas de alto valor:</strong> Cada evento
+neutralizado gera receita concentrada. Não requer escala massiva para
+ser viável.</li>
+<li><strong>Risco:</strong> Depende de capacidade de originação ou
+parceria para créditos do Cerrado.</li>
+</ul>
+<h2 id="recomendação-final">Recomendação Final</h2>
+<p>Para um novo entrante no mercado de eventos sustentáveis em Brasília
+no horizonte 2026–2030:</p>
+<p><strong>A Oportunidade 1 (Infraestrutura Física) é a mais
+robusta</strong> porque não depende de nenhum evento legislativo futuro
+— a demanda já existe, o modelo está validado localmente (Mercado Mané)
+e o mercado tem 2.450 empresas potenciais no DF. É a única que combina
+urgência presente, base de clientes mapeável e vantagem defensável
+(ativos físicos + know-how operacional).</p>
+<p>A Oportunidade 2 é um complemento natural (vender PGRS para os mesmos
+clientes da Infraestrutura), mas com gatilho regulatório futuro. A
+Oportunidade 3 é real, mas exige capacidade de originação de créditos de
+carbono e pode ser adiada até que a base de clientes esteja
+construída.</p>
+<p>A combinação mais estratégica no médio prazo: <strong>Infraestrutura
+Física como core, PGRS como serviço agregado, Neutralização como upsell
+para clientes corporativos de alto valor.</strong></p>
+</div></details>
+  <details><summary>Anexo 4 · IA-D: Claude (síntese)</summary><div class="annex"><h1
+id="síntese-das-respostas-ia-a-ia-b-e-ia-c-eventos-sustentáveis-em-brasília-df-20262030">Síntese
+das respostas IA-A, IA-B e IA-C: eventos sustentáveis em Brasília (DF),
+2026–2030</h1>
+<h2 id="diferenças-de-método">Diferenças de método</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Aspecto</th>
+<th>IA-A</th>
+<th>IA-B</th>
+<th>IA-C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Uso da web</td>
+<td>Declara ter pesquisado na web em 10/10/2026, com data de corte na
+mesma data [A]</td>
+<td>Declara não ter consultado a web e ter trabalhado "offline", com
+conhecimento "até a data atual de processamento (2026)" [B]</td>
+<td>Não declara se usou ou não a web [C]</td>
+</tr>
+<tr class="even">
+<td>Marcação [FATO]/[INFERÊNCIA]</td>
+<td>Marca sistematicamente [A]</td>
+<td>Declara que tudo está categorizado [B]. Na prática, vários números
+(CAC, ticket, margem, retorno, ponto de equilíbrio) aparecem sem
+marcação; as margens vêm como "estimada" [B]</td>
+<td>Não usa marcações [C]</td>
+</tr>
+<tr class="odd">
+<td>Uso de [SEM DADO CONFIÁVEL]</td>
+<td>Uso extenso, em todas as oportunidades [A]</td>
+<td>Usa três vezes, nas tabelas de evidências [B]</td>
+<td>Não usa [C]</td>
+</tr>
+<tr class="even">
+<td>Formato pedido</td>
+<td>Segue a estrutura de 10 seções por oportunidade: 5 perguntas, 3Ms,
+modelos web, checklist de Dornelas, risco, tabela de evidências. Inclui
+seção de descartadas e plano de validação [A]</td>
+<td>Segue a estrutura de 10 seções e inclui seção de descartadas, com
+referências a códigos do prompt (B2, B4, B5, B6) [B]</td>
+<td>Não segue a estrutura. Usa os blocos "Descrição", "Racional de
+Mercado", "Modelo de Negócio" e "Por que sobrevive aos filtros". Não tem
+checklist de Dornelas, tabela de evidências nem seção de descartadas
+[C]</td>
+</tr>
+<tr class="odd">
+<td>Fontes</td>
+<td>Nomeia leis, Sebrae e IBGE. Contém resíduos de formatação ("DFLegis
++1") e legendas de imagens sem contexto (South Summit/Trashin, Banff
+Marathon, Pluo) [A]</td>
+<td>Nomeia normas na seção 2 e nas tabelas [B]</td>
+<td>Cita casos e projetos de lei, mas não identifica a fonte de cifras
+como "2.450 empresas" [C]</td>
+</tr>
+<tr class="even">
+<td>Restrição de capital (R$ 50 mil)</td>
+<td>Considerada explicitamente [A]</td>
+<td>Considerada explicitamente [B]</td>
+<td>Não mencionada [C]</td>
+</tr>
+<tr class="odd">
+<td>Recorte</td>
+<td>DF e Entorno; micro ou pequena empresa, até 5 pessoas [A]</td>
+<td>Brasília/DF; microempresa [B]</td>
+<td>Brasília/DF [C]</td>
+</tr>
+</tbody>
+</table>
+<h2 id="a-convergências">(a) Convergências</h2>
+<ul>
+<li><strong>Gestão de resíduos em eventos aparece nas três
+respostas</strong> [A,B,C]. É a Oportunidade 1 de A, a Oportunidade 2 de
+B e um componente ("central de triagem") da Oportunidade 1 de C, que
+também dedica a Oportunidade 2 ao PGRS [A,B,C]. Os elementos comuns são:
+<ul>
+<li>triagem ou segregação no local [A,B,C];</li>
+<li>parceria com cooperativas [A,B,C];</li>
+<li>documentação ou relatório de destinação [A,B,C].</li>
+</ul></li>
+<li><strong>Cliente-alvo:</strong> produtoras de feiras, congressos e
+eventos corporativos ou institucionais [A,B,C].</li>
+<li><strong>Mensuração e prestação de contas ambiental como
+serviço:</strong>
+<ul>
+<li>relatório de impacto como oportunidade própria [A];</li>
+<li>"painel de dados ambientais pós-evento" e "laudo pós-evento"
+[B];</li>
+<li>mensuração de emissões com certificado [C].</li>
+</ul></li>
+<li><strong>Reutilização de materiais como eixo de negócio:</strong>
+<ul>
+<li>assessoria de compras e reutilização [A];</li>
+<li>cenografia modular reutilizável [B];</li>
+<li>locação de utensílios retornáveis e mobiliário reciclado [C].</li>
+</ul></li>
+<li><strong>Lei nº 12.305/2010 (PNRS) como base:</strong> A e B a citam
+como [FATO] [A,B]. C a menciona como a lei que o PL 5098/2025 alteraria
+[C].</li>
+<li><strong>Lei nº 14.133/2021 como base para critérios ambientais em
+contratações públicas</strong> [A,B], mas com graus de certeza
+diferentes (ver (d)).</li>
+<li><strong>Patrocinadores como interessados na comprovação
+ambiental</strong> [A,B].</li>
+<li><strong>Experiência do empreendedor em marketing como fator de venda
+e comunicação de resultados</strong> [A,B]. A ressalva que isso,
+isoladamente, não é barreira competitiva [A].</li>
+<li><strong>Modelo B2B de venda direta</strong> [A,B,C].</li>
+<li><strong>Órgãos públicos ou contratantes institucionais como
+compradores ou indutores</strong> [A,B,C].</li>
+<li><strong>Descartes em comum:</strong>
+<ul>
+<li>marketplace ou plataforma de fornecedores sustentáveis [A,B];</li>
+<li>fabricação de copos e talheres [A,B];</li>
+<li>produtora de eventos como negócio principal ("generalista" em [A];
+"grandes festivais neutros em carbono e veganos" em [B]).</li>
+</ul></li>
+<li><strong>Ausência de dado local confiável sobre o mercado</strong>
+[A,B]. A aponta em todas as oportunidades; B, em três itens.</li>
+</ul>
+<h2 id="b-divergências">(b) Divergências</h2>
+<p><strong>Oportunidade prioritária</strong></p>
+<ul>
+<li>A: gestão operacional de resíduos, leve em ativos ("Prioridade 1"),
+depois relatórios e compras sustentáveis [A].</li>
+<li>B: numera as três oportunidades, mas não declara ordem de prioridade
+[B].</li>
+<li>C: infraestrutura física é "a mais robusta"; PGRS é complemento;
+neutralização é upsell que pode ser adiado [C].</li>
+</ul>
+<p><strong>Ativos próprios</strong></p>
+<ul>
+<li>A: começar sem frota, estoque ou armazenagem; ativos só após
+validação [A]. Trata custos de saída baixos como vantagem e reconhece
+que a defesa contra cópia é limitada [A].</li>
+<li>B: a cenografia exige acervo modular, com os R$ 50 mil "aplicados no
+acervo inicial" [B]. O Lixo Zero aloca o capital "em equipamentos e
+sinalização" [B].</li>
+<li>C: a infraestrutura "requer investimento em ativos (central de
+lavagem, utensílios)", e isso é tratado como barreira de entrada
+defensável [C].</li>
+</ul>
+<p><strong>"Por que agora" e grau de urgência regulatória</strong></p>
+<ul>
+<li>A: as obrigações distritais já existiam antes de 2020, e "não seria
+correto afirmar que essa necessidade nasceu em 2026". A também diz que
+não há evidência de que os contratantes do DF passaram a exigir
+relatórios com mais frequência em 2026 [A].</li>
+<li>B: a Lei nº 14.133 teria "aplicação compulsória plena", com órgãos
+do DF regulamentando e cobrando "rigorosamente entre 2024 e 2026". B
+também afirma que a fiscalização ficou mais rigorosa com os Termos de
+Compromisso de Logística Reversa [B].</li>
+<li>C: a pressão regulatória é "iminente" (PL 5098/2025). Ao mesmo
+tempo, C afirma que a Oportunidade 1 "não depende de nenhum evento
+legislativo futuro — a demanda já existe" [C].</li>
+</ul>
+<p><strong>Certificação</strong></p>
+<ul>
+<li>A descarta a certificação própria por falta de reconhecimento e
+critérios verificáveis. Recomenda não alegar acreditação nem prometer
+auditoria acreditada [A].</li>
+<li>B usa certificação como parte da oferta: "Gestão e Certificação de
+Conformidade Ambiental", "destinação certificada", selo "Lixo Zero"
+[B].</li>
+<li>C oferece "consultoria e certificação" com "emissão de certificado"
+de neutralização [C].</li>
+</ul>
+<p><strong>Checklist de Dornelas</strong></p>
+<ul>
+<li>A marca "Sim, com condição" nas perguntas 4 e 5 das três
+oportunidades [A].</li>
+<li>B marca "SIM" em todas as perguntas das três [B].</li>
+<li>C não aplica o checklist [C].</li>
+</ul>
+<p><strong>Estágio do mercado</strong></p>
+<ul>
+<li>A diz que não há dados para classificar o mercado local como
+emergente ou maduro [A].</li>
+<li>B classifica como "emergente", "forte expansão" e
+"introdução/crescimento rápido" [B].</li>
+</ul>
+<p><strong>Vantagem do empreendedor</strong></p>
+<ul>
+<li>A: marketing ajuda, mas não é barreira suficiente [A].</li>
+<li>B: Administração mais marketing é o diferencial frente aos
+incumbentes [B].</li>
+<li>C: não trata o perfil do empreendedor [C].</li>
+</ul>
+<p><strong>Enquadramento nos modelos web</strong></p>
+<ul>
+<li>A: as três oportunidades são "modelo empresarial (B2B)" [A].</li>
+<li>B: a Oportunidade 1 é "Empresarial"; as Oportunidades 2 e 3 "não se
+enquadram" nos modelos digitais [B].</li>
+<li>C: não trata o tema [C].</li>
+</ul>
+<p><strong>Sanções</strong></p>
+<ul>
+<li>A traz os limites legais de multa como [FATO] (ver (d)) [A].</li>
+<li>B fala em "multas dos órgãos ambientais do DF (DF Legal/IBRAM)",
+"autuação e embargo", dentro de um problema marcado como [INFERÊNCIA]
+[B].</li>
+</ul>
+<h2 id="c-itens-exclusivos">(c) Itens exclusivos</h2>
+<p><strong>Só em A</strong></p>
+<ul>
+<li>Oportunidades exclusivas: relatórios de impacto ambiental como
+serviço autônomo, e assessoria de compras sustentáveis e reutilização
+sem estoque [A].</li>
+<li>Lei Distrital nº 5.610/2016, alterada pela Lei nº 6.484/2020 (arts.
+9º e 11) [A].</li>
+<li>Conteúdos do Centro Sebrae de Sustentabilidade (2025) e IBGE,
+Pesquisa Mensal de Serviços (jun/2024), tratados como contexto e não
+como medida de mercado [A].</li>
+<li>Prospecção de festivais na Granja do Torto e de centros de
+convenções do DF [A].</li>
+<li>Indicadores de carbono só com metodologia, fronteiras e fatores de
+emissão explícitos [A].</li>
+<li>Plano de validação em 5 etapas antes de investir os R$ 50 mil:
+entrevistas, mapeamento de editais e concorrentes, piloto pago, margem
+de contribuição, investimento por etapas [A].</li>
+</ul>
+<p><strong>Só em B</strong></p>
+<ul>
+<li>Oportunidades exclusivas: consultoria ESG para licitações de eventos
+públicos, e cenografia sustentável com locação de modulares [B].</li>
+<li>Decreto Distrital nº 43.190/2022, PDGIRS/DF, ABNT NBR ISO 20121:2012
+e Termos de Compromisso de Logística Reversa [B].</li>
+<li>Canais: Sicaf, DODF/DOU, LinkedIn e eventos do Sebrae [B].</li>
+<li>Espaços citados: Centro de Convenções Ulysses Guimarães, Estádio
+Mané Garrincha e CICB [B].</li>
+<li>Empresas citadas como exemplos de clientes: SICC, PO Poupex,
+Sicoob/Sicredi e Votorantim Cimentos [B].</li>
+<li>Compostagem como parte da operação [B].</li>
+<li>Números de B:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Indicador</th>
+<th>Valor</th>
+<th>Origem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Contratos de licitação</td>
+<td>R$ 300 mil a mais de R$ 2 milhões</td>
+<td>[B]</td>
+</tr>
+<tr class="even">
+<td>Agências de médio porte</td>
+<td>80 a 120 [INFERÊNCIA]</td>
+<td>[B]</td>
+</tr>
+<tr class="odd">
+<td>Eventos de médio e grande porte por ano</td>
+<td>150 a 200 [INFERÊNCIA]</td>
+<td>[B]</td>
+</tr>
+<tr class="even">
+<td>Retainer mensal</td>
+<td>R$ 5.000</td>
+<td>[B]</td>
+</tr>
+<tr class="odd">
+<td>Diária do serviço Lixo Zero</td>
+<td>R$ 2.500 a R$ 4.000</td>
+<td>[B]</td>
+</tr>
+<tr class="even">
+<td>Cenografia descartada por evento</td>
+<td>R$ 20 mil a R$ 80 mil</td>
+<td>[B]</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Só em C</strong></p>
+<ul>
+<li>Oportunidades exclusivas: neutralização de carbono com créditos do
+Cerrado, e infraestrutura física (lavagem móvel, utensílios retornáveis,
+mobiliário reciclado) [C].</li>
+<li>Caso Mercado Mané, gerido pela R2 Produções: lixo zero com mais de
+90% dos resíduos desviados de aterro e triagem remunerada da Cooperativa
+Acobraz [C].</li>
+<li>2.450 empresas de eventos ativas no DF, das quais 478 de serviços de
+eventos [C].</li>
+<li>PL 5098/2025, apensado ao PL 5824/2023 e publicado em avulso em
+fevereiro de 2026, com vigência 180 dias após aprovação [C].</li>
+<li>Lei de Goiás nº 23.657/2025, já vigente: PGRS para eventos com 2.000
+ou mais pessoas e cooperativas obrigatórias em eventos públicos
+[C].</li>
+<li>Sesc MG: neutralização de 11.000 kg de CO₂ via Eccaplan [C].</li>
+<li>Expointer 2026 (RS): QR codes para neutralização, com a CRVR como
+patrocinadora [C].</li>
+<li>II CIRSOL em Brasília e metodologia GHG Protocol [C].</li>
+</ul>
+<h2 id="d-conflitos-de-dados">(d) Conflitos de dados</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Indicador</th>
+<th>IA-A</th>
+<th>IA-B</th>
+<th>IA-C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Número de empresas ou concorrentes no DF</td>
+<td>Concorrentes especializados: [SEM DADO CONFIÁVEL] [A]</td>
+<td>80–120 agências [INFERÊNCIA]; na tabela, "empresas de eventos
+operando no DF": [SEM DADO CONFIÁVEL] [B]</td>
+<td>2.450 empresas, 478 de serviços de eventos, sem marcação nem fonte
+nomeada [C]</td>
+</tr>
+<tr class="even">
+<td>Margem bruta</td>
+<td>[SEM DADO CONFIÁVEL] nas três oportunidades [A]</td>
+<td>Estimada em 70–80% (Op1), 40–50% (Op2) e 55–65% (Op3) [B]</td>
+<td>Não informa [C]</td>
+</tr>
+<tr class="odd">
+<td>CAC e recuperação em menos de 1 ano</td>
+<td>[SEM DADO CONFIÁVEL] [A]</td>
+<td>CAC de R$ 1.200 (Op1) e cerca de R$ 800 (Op2), recuperado no 1º
+contrato [B]</td>
+<td>Não informa [C]</td>
+</tr>
+<tr class="even">
+<td>Preço ou ticket</td>
+<td>[SEM DADO CONFIÁVEL]; não fixa tabela antes de cotações [A]</td>
+<td>Op1: R$ 8–15 mil, médio de R$ 10 mil. Op2: R$ 6–12 mil por evento de
+3 dias. Op3: R$ 15–35 mil [B]</td>
+<td>Não informa [C]</td>
+</tr>
+<tr class="odd">
+<td>Ponto de equilíbrio e retorno</td>
+<td>[SEM DADO CONFIÁVEL] / "não demonstrado" [A]</td>
+<td>Op1: 2 contratos/mês, retorno em 6–8 meses. Op2: 2–3 eventos/mês, 10
+meses. Op3: 8–12 meses [B]</td>
+<td>Não informa [C]</td>
+</tr>
+<tr class="even">
+<td>Base legal da obrigação de gerenciar resíduos de eventos</td>
+<td>Lei Distrital nº 5.610/2016 já vigente para eventos em espaços
+públicos [FATO] [A]</td>
+<td>Lei nº 12.305, PDGIRS/DF e Termos de Logística Reversa; não cita a
+Lei 5.610 [B]</td>
+<td>Plano de gerenciamento para organizadores ainda em PL federal em
+tramitação; lei análoga vigente em Goiás [C]</td>
+</tr>
+<tr class="odd">
+<td>Status da Lei nº 14.133 quanto à sustentabilidade</td>
+<td>Princípio legal que "não garante" exigência em editais [FATO +
+INFERÊNCIA] [A]</td>
+<td>"Inclusão obrigatória e crescente" de critérios [FATO], com
+"aplicação compulsória plena" [B]</td>
+<td>Não cita [C]</td>
+</tr>
+<tr class="even">
+<td>Concorrência existente</td>
+<td>Número [SEM DADO CONFIÁVEL] [A]</td>
+<td>Descrição qualitativa: poucos consultores autônomos, PwC/EY sem
+interesse no segmento, nenhum "integrador profissional" [B]</td>
+<td>"Não há registro" de fornecedor de infraestrutura no DF nem de
+provedor brasiliense de neutralização [C]</td>
+</tr>
+<tr class="odd">
+<td>Multas</td>
+<td>Até R$ 2.000/dia e até R$ 20.000 por infração, como limites legais e
+não médias (Lei 5.610, art. 9º) [A]</td>
+<td>Menção a multas sem valores [B]</td>
+<td>Não informa [C]</td>
+</tr>
+<tr class="even">
+<td>Capital de R$ 50 mil</td>
+<td>Limite do cenário, não orçamento cotado [A]</td>
+<td>Marcado como [INFERÊNCIA]; aplicado integralmente em cada
+oportunidade (acervo, equipamentos) [B]</td>
+<td>Não mencionado [C]</td>
+</tr>
+</tbody>
+</table>
+<h2 id="e-lacunas">(e) Lacunas</h2>
+<p><strong>IA-A marca [SEM DADO CONFIÁVEL] em:</strong></p>
+<ul>
+<li>tamanho monetário do nicho e receita anual acessível;</li>
+<li>margem bruta, número de concorrentes, recuperação do CAC, ponto de
+equilíbrio e preço de venda, nas três oportunidades;</li>
+<li>custo médio de falhas operacionais (Op1) e custo da falta de
+evidências (Op2);</li>
+<li>disposição a pagar, nas três;</li>
+<li>número de contratantes que pagam separadamente pela mensuração, e
+ticket médio dos relatórios;</li>
+<li>gasto anual com materiais por produtora e economia média com
+reutilização [A].</li>
+</ul>
+<p><strong>IA-B marca [SEM DADO CONFIÁVEL] em:</strong></p>
+<ul>
+<li>empresas de eventos atuando em licitações no DF;</li>
+<li>volume de resíduos de eventos no DF;</li>
+<li>MDF e lona descartados no DF [B].</li>
+</ul>
+<p>Além disso, os números de CAC, ticket, margem e retorno não têm fonte
+nas tabelas de evidências [B].</p>
+<p><strong>IA-C</strong> não marca lacunas [C]. Não trata capital, CAC,
+margem, preço, ponto de equilíbrio, checklist de Dornelas, modelos web
+nem oportunidades descartadas. Não nomeia as fontes das cifras de
+mercado [C].</p>
+<p><strong>Lacuna comum às três:</strong> nenhuma traz tamanho monetário
+do mercado de eventos sustentáveis no DF com fonte [A,B,C].</p>
+<h2 id="f-oportunidades-descartadas">(f) Oportunidades descartadas</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Descartada</th>
+<th>Por</th>
+<th>Motivo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Produtora generalista de eventos sustentáveis</td>
+<td>A</td>
+<td>Pergunta 4: competiria em estrutura e atendimento amplo sem
+evidência de que o atributo sustentável gere contratos rentáveis com o
+capital disponível [A]</td>
+</tr>
+<tr class="even">
+<td>Plataforma ou marketplace de fornecedores sustentáveis</td>
+<td>A, B</td>
+<td>A, Pergunta 4: sem evidência de volume de compradores e fornecedores
+dispostos a pagar [A]. B, Enquadramento Web e Triagem P4: problema do
+"ovo e da galinha" e custo de tráfego e desenvolvimento acima de R$ 50
+mil [B]</td>
+</tr>
+<tr class="odd">
+<td>Fabricação de copos, talheres (e brindes)</td>
+<td>A, B</td>
+<td>A, Pergunta 4: produção, estoque, logística e concorrência por preço
+consumiriam o capital [A]. B, Dornelas P4 e escopo: CAPEX industrial
+inviável com R$ 50 mil [B]</td>
+</tr>
+<tr class="even">
+<td>Certificação própria de eventos sustentáveis</td>
+<td>A</td>
+<td>Pergunta 2: sem reconhecimento nem critérios verificáveis, não
+garante valor [A]</td>
+</tr>
+<tr class="odd">
+<td>SaaS de pegada de carbono para eventos sociais</td>
+<td>B</td>
+<td>Dornelas P3 e Triagem P3: noivos e aniversariantes não pagariam, e o
+B2C é difuso [B]</td>
+</tr>
+<tr class="even">
+<td>Produtora de grandes festivais neutros em carbono e veganos</td>
+<td>B</td>
+<td>Limite de capital e Dornelas P4: R$ 50 mil insuficientes para o
+risco de caixa, cachês e infraestrutura [B]</td>
+</tr>
+<tr class="odd">
+<td>(nenhuma)</td>
+<td>C</td>
+<td>Não apresenta seção de descartadas [C]</td>
+</tr>
+</tbody>
+</table>
+<h2 id="g-tabela-final">(g) Tabela final</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Oportunidade</th>
+<th>Citada por</th>
+<th>Pontos fortes segundo as respostas</th>
+<th>Pontos fracos segundo as respostas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Gestão e operação de resíduos em eventos (triagem, cooperativas,
+destinação, relatório)</td>
+<td>A (Op1), B (Op2), C (componente da Op1)</td>
+<td>Obrigação normativa identificável e poucos ativos [A]; sem
+integrador profissional no mercado, ticket recuperável em um evento,
+margem estimada de 40–50% [B]; modelo validado localmente no Mercado
+Mané [C]</td>
+<td>Comprador pode preferir pacote de limpeza ou produção já existente;
+demanda, preço e margem [SEM DADO CONFIÁVEL] [A]; risco de falha da
+cooperativa comprometer a credibilidade [B]</td>
+</tr>
+<tr class="even">
+<td>PGRS como serviço / conformidade documental</td>
+<td>C (Op2); planejamento de descarte em A (Op1); plano de gerenciamento
+ambiental em B (Op1)</td>
+<td>Gatilho regulatório claro após aprovação, prazo de 180 dias, demanda
+institucional alta em Brasília [C]</td>
+<td>Depende de lei ainda em tramitação, com timing incerto; receita
+recorrente limitada [C]</td>
+</tr>
+<tr class="odd">
+<td>Consultoria de conformidade ESG para licitações de eventos
+públicos</td>
+<td>B (Op1)</td>
+<td>Dor de inabilitação em contratos de R$ 300 mil a R$ 2 milhões,
+margem estimada de 70–80%, retorno em 6–8 meses, poucos ativos [B]</td>
+<td>Flexibilização das regras de compras públicas; agências podem
+internalizar especialistas [B]. A observa que a Lei 14.133 é princípio e
+não garante exigência em edital [A]</td>
+</tr>
+<tr class="even">
+<td>Relatórios de impacto ambiental / mensuração</td>
+<td>A (Op2); elementos em B (painel e laudo)</td>
+<td>Pouco capital físico, entrega digital, metodologia replicável
+[A]</td>
+<td>Cliente pode achar que a agência já faz sem custo extra; disposição
+a pagar [SEM DADO CONFIÁVEL] [A]</td>
+</tr>
+<tr class="odd">
+<td>Neutralização de carbono com créditos do Cerrado</td>
+<td>C (Op3); A condiciona indicadores de carbono a metodologia
+explícita; B cita neutralização como exigência de edital</td>
+<td>Demanda institucional existente, diferencial local (Cerrado), casos
+Sesc MG e Expointer, alto valor por evento [C]</td>
+<td>Depende de originação ou parceria para créditos; pode ser adiada
+[C]. A desaconselha certificação própria sem reconhecimento [A]</td>
+</tr>
+<tr class="even">
+<td>Assessoria de compras sustentáveis e reutilização (sem estoque)</td>
+<td>A (Op3)</td>
+<td>Poucos ativos, recorrência, economia demonstrável [A]</td>
+<td>Cliente já negocia direto com fornecedores; conceito copiável;
+economia média [SEM DADO CONFIÁVEL] [A]</td>
+</tr>
+<tr class="odd">
+<td>Cenografia modular reutilizável (locação)</td>
+<td>B (Op3)</td>
+<td>Margem estimada de 55–65% após amortização, ticket de R$ 15–35 mil,
+nicho incipiente no DF [B]</td>
+<td>Danos ao acervo no transporte; queda de custo do MDF tradicional;
+exige os R$ 50 mil no acervo [B]</td>
+</tr>
+<tr class="even">
+<td>Infraestrutura física (utensílios retornáveis, lavagem móvel,
+triagem, mobiliário reciclado)</td>
+<td>C (Op1)</td>
+<td>Demanda presente, modelo validado (Mercado Mané), 2.450 empresas
+potenciais, ativos como barreira [C]</td>
+<td>C não aponta riscos para esta oportunidade nem trata do limite de
+capital [C]. A, em geral, recomenda não imobilizar capital antes de
+validar [A]</td>
+</tr>
+</tbody>
+</table>
+</div></details>
+  <h3>Nota sobre o uso de IA na elaboração</h3>
+  <p>Além das quatro IAs estudadas, usei um assistente de IA (Claude, em sessão separada da síntese) como apoio na organização do trabalho, na busca das fontes primárias e na redação. A escolha do setor e do recorte, a avaliação das oportunidades, a hierarquia de gravidade dos erros e as conclusões são minhas. Todas as fontes citadas no corpo do site foram consultadas diretamente.</p>
+  <div class="pager"><a href="#conclusao">← Conclusão</a><a href="#abertura">Voltar ao início ↑</a></div>
+</section>
+</main>
+
+<footer><div class="wrap">Rodrigo de Souza Leitão de Araújo · Matrícula 211051415 · ADM0150 Criação de Negócios · UnB · 2026.2. As respostas de IA aparecem apenas como anexos e objeto de estudo.</div></footer>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var pages=[].slice.call(document.querySelectorAll('section.page'));
+  var links=[].slice.call(document.querySelectorAll('nav a'));
+  function show(){
+    var id=(location.hash||'#abertura').slice(1);
+    if(!document.getElementById(id)||!document.getElementById(id).classList.contains('page')) id='abertura';
+    pages.forEach(function(p){p.classList.toggle('active',p.id===id)});
+    links.forEach(function(a){ if(a.getAttribute('href')==='#'+id) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');});
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',show); show();
+})();
+</script>
+</body>
+</html>
